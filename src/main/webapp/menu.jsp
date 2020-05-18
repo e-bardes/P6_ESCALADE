@@ -1,27 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%> 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page isELIgnored="false" %>    
+<%@ page isELIgnored="false" %>   
     
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Les amis de l'escalade</title>
-</head>
-<body>
-	<c:if test="${not empty login}">
-	Bonjour ${login} (<a href="logout">Déconnexion</a>)<br/>
-	</c:if>
-	<h1>Les amis de l'escalade</h1>
-	<a href="login.html">Se connecter</a><br/>
-	<a href="register.jsp">S'inscrire</a><br/>
-	<a href="topo">Consulter la liste des topos</a><br/>
-	<a href="site">Consulter la liste des sites</a>
+	<head>
+		<style type="text/css"><%@ include file="/style/style2.css" %></style>
+		<title>Les amis de l'escalade</title>
+		
+		<meta charset="utf-8" />
 	
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
+		 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+		 integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		
+	</head>
+	<body>
+	  	<div class="container">
+			<%@ include file="/WEB-INF/common/header.jspf" %>
+			<%@ include file="/WEB-INF/common/navigation.jspf" %>
+		</div>
+		  
+	    <section class="text-center">
+	    	<div class="container jumbotron bg-white mt-5 border" id="test">
+	  			<p> Bienvenue sur le site ! </p>
+	  		</div>
 	
-</body>
+	    </section>
+	  
+	    <div class="container">
+	      <%@ include file="/WEB-INF/common/footer.jspf" %>
+	    </div>
+			
+		<%@ include file="/WEB-INF/common/bootstrap.jspf" %>
+	</body>
 </html>

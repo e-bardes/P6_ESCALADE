@@ -19,13 +19,12 @@ public class UtilisateurConnecte {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String login;
 	private String password;
 	private String nom;
 	private String prenom;
-	@Column(name = "adresse_mail")
+	@Column(name = "adresse_mail", unique = true)
 	private String adresseMail;
-	@Column(name = "adresse_postal")
+	@Column(name = "adresse_postal", unique = true)
 	private String adressePostal;
 	@Column(name = "is_membre_association")
 	private boolean isMembreAssociation;
@@ -49,8 +48,12 @@ public class UtilisateurConnecte {
 		
 	}
 	
-	public UtilisateurConnecte(String login, String password, String nom, String prenom, String adresseMail, String adressePostal) {
-		this.login = login;
+	public UtilisateurConnecte(String adresseMail, String password) {
+		this.adresseMail = adresseMail;
+		this.password = password;
+	}
+	
+	public UtilisateurConnecte(String password, String nom, String prenom, String adresseMail, String adressePostal) {
 		this.password = password;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -58,12 +61,6 @@ public class UtilisateurConnecte {
 		this.adressePostal = adressePostal;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-	public void setLogin(String login) {
-		this.login = login;
-	}
 	public String getPassword() {
 		return password;
 	}
@@ -155,14 +152,4 @@ public class UtilisateurConnecte {
 	public void setAdressePostal(String adressePostal) {
 		this.adressePostal = adressePostal;
 	}
-
-	@Override
-	public String toString() {
-		return "UtilisateurConnecte [id=" + id + ", login=" + login + ", password=" + password + ", nom=" + nom
-				+ ", prenom=" + prenom + ", adresseMail=" + adresseMail + ", adressePostal=" + adressePostal
-				+ ", isMembreAssociation=" + isMembreAssociation + ", listeCommentaires=" + listeCommentaires
-				+ ", listeReservationTopos=" + listeReservationTopos + "]";
-	}
-	
-	
 }

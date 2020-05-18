@@ -12,4 +12,6 @@ public interface SiteService {
 	Optional<Site> findById(Long id);
 	
 	public List<Site> getAllSites();
+	
+	List<Site> findAll();
 }

@@ -1,5 +1,6 @@
 package com.openclassroom.escalade.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,7 @@ import com.openclassroom.escalade.domain.Site;
 public interface SiteRepository extends JpaRepository<Site, Long> { 
 
 	
-	public Optional<Site> findById(Long id);
+	Optional<Site> findById(Long id);
+	
+	@Override List<Site> findAll();
 }

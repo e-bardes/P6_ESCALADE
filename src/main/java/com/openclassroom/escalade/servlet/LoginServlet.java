@@ -15,9 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.openclassroom.escalade.domain.UtilisateurConnecte;
 import com.openclassroom.escalade.service.UtilisateurConnecteService;
 
-@WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
+@WebServlet(name = "LoginServlet", urlPatterns = { "/login" }) // si ça devient l'entrée du site faut mettre rien et pas login
 public class LoginServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String USER = "utilisateur";
+	public static final String FORM = "form";
+	public static final String SESSION_USER = "sessionUtilisateur";
+	public static final String VUE = "/WEB-INF/login.jsp";
 	
 	private UtilisateurConnecteService utilisateurConnecteService;
 	
@@ -29,26 +34,25 @@ public class LoginServlet extends AbstractServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html");
-
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
 		
-		List<UtilisateurConnecte> listeUtilisateurs = utilisateurConnecteService.findAll();
+		UtilisateurConnecte utilisateur = utilisateurConnecteService.connexionUtilisateur(request);
 		
-		RequestDispatcher disp = null;
+		HttpSession session = request.getSession();
 		
-		for (UtilisateurConnecte utilisateur: listeUtilisateurs) {
-			if (utilisateur.getLogin().equals(login) && utilisateur.getPassword().equals(password)) {
-				HttpSession session = request.getSession();
-				session.setAttribute("login", login);
-				disp = request.getRequestDispatcher("menu.jsp");
-				disp.forward(request, response);
-			}
+		if(utilisateurConnecteService.getErreurConnexion() == null) {
+			session.setAttribute(SESSION_USER, utilisateur);
+		} else {
+			session.setAttribute(SESSION_USER, null);
 		}
 		
-		// n'importe quel attribut pour pouvoir vérifier une condition dans login.jsp
-		request.setAttribute("password", password);
-		disp = request.getRequestDispatcher("login.jsp");
-		disp.forward(request, response);
+		request.setAttribute(FORM, utilisateurConnecteService);
+		request.setAttribute(USER, utilisateur);
+		
+		request.getRequestDispatcher(VUE).forward(request, response);
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		request.getRequestDispatcher(VUE).forward(request, response);
 	}
 }

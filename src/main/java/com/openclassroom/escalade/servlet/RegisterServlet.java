@@ -1,7 +1,9 @@
 package com.openclassroom.escalade.servlet;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +21,10 @@ import com.openclassroom.escalade.service.UtilisateurConnecteService;
 public class RegisterServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
+	public static final String USER = "utilisateur";
+	public static final String FORM = "form";
+	public static final String VUE = "register.jsp";
+	
 	private UtilisateurConnecteService utilisateurConnecteService;
 	
 	@Autowired
@@ -30,38 +36,17 @@ public class RegisterServlet extends AbstractServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		String nom = request.getParameter("nom");
-		String prenom = request.getParameter("prenom");
-		String adresseMail = request.getParameter("adresse-mail");
-		String adressePostal = request.getParameter("adresse-postal");
+		UtilisateurConnecte utilisateur = utilisateurConnecteService.inscriptionUtilisateur(request);
 		
-		List<UtilisateurConnecte> listeUtilisateurs = utilisateurConnecteService.findAll();
+		request.setAttribute(FORM, utilisateurConnecteService);
+		request.setAttribute(USER, utilisateur);
 		
-		RequestDispatcher disp = null;
+		request.getRequestDispatcher(VUE).forward(request, response);
 		
-		for (UtilisateurConnecte utilisateur: listeUtilisateurs) {
-			if (utilisateur.getPassword().equals(password)
-					|| utilisateur.getAdresseMail().equals(adresseMail)
-					|| utilisateur.getAdressePostal().equals(adressePostal)) {
-				// on stock un attribut, n'importe lequel pour le moment
-				request.setAttribute("password", password);
-				disp = request.getRequestDispatcher("register.jsp");
-				disp.forward(request, response);
-			}
-		}
-		
-		UtilisateurConnecte utilisateurConnecte = new UtilisateurConnecte(
-				login, password, nom, prenom, adresseMail, adressePostal);
-		utilisateurConnecteService.save(utilisateurConnecte);
-		
-		HttpSession session = request.getSession();
-		
-		session.setAttribute("login", login);
-		
-		disp = request.getRequestDispatcher("menu.jsp");
-		disp.forward(request, response);
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher(VUE).forward(request, response);
 	}
 	
 }

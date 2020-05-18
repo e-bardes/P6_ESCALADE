@@ -12,9 +12,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="details-site?id=${site.id}" method="POST">
-		Contenu du commentaire : <input type="text" name=contenuDuCommentaire/><BR/>
-		<input type="submit" value="Commenter"/>
-	</form>
+	
+	<div>
+		<%@ include file="/WEB-INF/common/header.jspf"%>
+		<%@ include file="/WEB-INF/common/navigation.jspf"%>
+	</div>
+		
+	<section>
+		<form action="details-site?id=${site.id}" method="POST">
+			<p><label for="contenuDuCommentaire"> Contenu du commentaire : </label> </p>
+			<textarea name=contenuDuCommentaire></textarea>
+			<input type="submit" value="Commenter"/>
+		</form>
+		
+	</section>
+		
+	<div>
+		<%@ include file="/WEB-INF/common/footer.jspf"%>
+	</div>
+
 </body>
 </html>

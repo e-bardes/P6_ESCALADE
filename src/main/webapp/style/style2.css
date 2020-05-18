@@ -1,0 +1,27 @@
+footer{
+	position: absolute;
+	bottom: 0px;
+	width: 60%;
+	height: 100px;
+}
+
+
+
+#test{
+	position: fixed;
+	height: 70%;
+	width: 60%;
+	left: 21.5%;
+}
+
+form .requis {
+    color: #c00;
+}
+
+form .erreur {
+    color: #900;
+}
+
+form .succes {
+    color: #090;
+}

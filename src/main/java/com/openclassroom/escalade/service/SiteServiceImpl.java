@@ -73,12 +73,18 @@ public class SiteServiceImpl implements SiteService{
 	public List<Site> getAllSites() {
 		return repository.findAll();
 	}
+
+	@Override
+	public List<Site> findAll() {
+		return repository.findAll();
+	}
 	
 //	@Autowired
 //	public SiteServiceImpl(TopoService topoService) {
 //		System.out.println("eezaaezezaaez");
 //		this.topoService = topoService;
 //	}
+	
 	
 	
 }
