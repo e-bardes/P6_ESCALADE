@@ -43,6 +43,9 @@ public class RegisterServlet extends AbstractServlet {
 		
 		request.getRequestDispatcher(VUE).forward(request, response);
 		
+		// response.sendRedirect("register");
+;
+		
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

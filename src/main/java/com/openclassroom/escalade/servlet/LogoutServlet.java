@@ -18,7 +18,6 @@ public class LogoutServlet extends HttpServlet {
 
 		request.getSession().invalidate();
 		
-		RequestDispatcher disp = request.getRequestDispatcher("menu.jsp");
-		disp.forward(request, response);
+		response.sendRedirect("/escalade");
 	}
 }

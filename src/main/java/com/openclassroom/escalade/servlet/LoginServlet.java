@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.openclassroom.escalade.domain.UtilisateurConnecte;
 import com.openclassroom.escalade.service.UtilisateurConnecteService;
 
-@WebServlet(name = "LoginServlet", urlPatterns = { "/login" }) // si ça devient l'entrée du site faut mettre rien et pas login
+@WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -48,6 +48,7 @@ public class LoginServlet extends AbstractServlet {
 		request.setAttribute(FORM, utilisateurConnecteService);
 		request.setAttribute(USER, utilisateur);
 		
+		// redirect ???
 		request.getRequestDispatcher(VUE).forward(request, response);
 	}
 	

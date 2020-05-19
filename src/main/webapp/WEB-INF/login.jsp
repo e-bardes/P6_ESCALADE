@@ -30,7 +30,7 @@
 			Champ(s) non valide(s). Veuillez réessayer.<br/>
 			</c:if>
 			
-			<form action="login" method="POST" class="col-4" novalidate>
+			<form action="<c:url value="/login" />" method="POST" class="col-4" novalidate>
 				<div class="form-group">
 					<label for="adressemail"> Email : </label> 
 					<input class="form-control" type="email" name="adressemail" id="adressemail"
