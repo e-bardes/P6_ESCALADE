@@ -1,3 +1,5 @@
+// pas encore utilisé
+
 package com.openclassroom.escalade.domain;
 
 public enum CotationFalaise {

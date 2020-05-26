@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+// permet de faire fonctionner les servlets et spring ensemble
 public abstract class AbstractServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

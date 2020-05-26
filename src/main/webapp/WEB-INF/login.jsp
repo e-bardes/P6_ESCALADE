@@ -26,11 +26,8 @@
 
 	<section>
     	<div class="container jumbotron bg-white mt-5 border" id="test">
-	  		<c:if test="${not empty adressemail}">
-			Champ(s) non valide(s). Veuillez réessayer.<br/>
-			</c:if>
 			
-			<form action="<c:url value="/login" />" method="POST" class="col-4" novalidate>
+			<form action="<c:url value="/login" />" method="POST" class="col-4">
 				<div class="form-group">
 					<label for="adressemail"> Email : </label> 
 					<input class="form-control" type="email" name="adressemail" id="adressemail"
@@ -39,16 +36,17 @@
 				<div class="form-group">
 					<label for="password">Mot de passe :</label> 
 					<input class="form-control" type="password" name="password" id="password" required>
-					<span class="erreur">${form.erreurConnexion}</span>
+					<span class="erreur">${erreurConnexion}</span>
+				</div>
+				<div class="form-group">
+					<label for="memoire">Se souvenir de moi</label>
+					<input type="checkbox" id="memoire" name="memoire">
 				</div>
 				<button class="btn btn-primary" type="submit"> Login </button>
 				<br/>
-				<p class="${empty form.erreurConnexion ? 'succes' : 'erreur'}">${form.resultat}</p>
-				
-				<c:if test="${!empty sessionScope.sessionUtilisateur}">
-					<p class="succes">Vous êtes connecté(e) avec l'adresse : 
-						${sessionScope.sessionUtilisateur.adresseMail}</p>
-				</c:if>
+				<!-- affichage du succès ou de l'échec de la connexion -->
+				<p class="${empty erreurConnexion ? 'succes' : 'erreur'}">${resultat}</p>
+
 			</form>
   		</div>
 
@@ -57,8 +55,6 @@
 	<div class="container">
       <%@ include file="/WEB-INF/common/footer.jspf" %>
     </div>
-		
-	<%@ include file="/WEB-INF/common/bootstrap.jspf" %>
 	
 	
 </body>

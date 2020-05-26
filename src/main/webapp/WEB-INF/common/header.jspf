@@ -7,7 +7,6 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<!--link rel="stylesheet" href="style.css" / -->
 		<title>Escalade</title>
 		
 
@@ -17,7 +16,8 @@
 		<header class="bg-light">
 			<div id="estConnecte" class="container">
 				<c:if test="${!empty sessionScope.sessionUtilisateur}">
-				<p> Bonjour ${sessionScope.sessionUtilisateur.adresseMail} 
+				<p> Bonjour ${sessionScope.sessionUtilisateur.prenom} 
+					${sessionScope.sessionUtilisateur.nom} 
 				(<a href="logout">Déconnexion</a>)<br/> <p>
 				</c:if>
 			</div>

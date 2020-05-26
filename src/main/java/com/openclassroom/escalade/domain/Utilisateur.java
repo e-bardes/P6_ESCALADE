@@ -12,8 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="testdb.utilisateur_connecte")
-public class UtilisateurConnecte {
+@Table(name="testdb.utilisateur")
+public class Utilisateur {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,41 +24,34 @@ public class UtilisateurConnecte {
 	private String prenom;
 	@Column(name = "adresse_mail", unique = true)
 	private String adresseMail;
-	@Column(name = "adresse_postal", unique = true)
+	@Column(name = "adresse_postal")
 	private String adressePostal;
 	@Column(name = "is_membre_association")
 	private boolean isMembreAssociation;
 	
-//	@ManyToMany
-//	@JoinTable(name="testdb.topo_utilisateur",
-//				joinColumns = @JoinColumn(name="id_utilisateur_connecte"),
-//				inverseJoinColumns = @JoinColumn(name="id_topo"))
-//	private List<Topo> listeTopos = new ArrayList<Topo>();
-	
-	@OneToMany(targetEntity=Commentaire.class, mappedBy="utilisateurConnecte")
+	@OneToMany(targetEntity=Commentaire.class, mappedBy="utilisateur")
 	public List<Commentaire> listeCommentaires = new ArrayList<Commentaire>();
 	
-	@OneToMany(mappedBy = "utilisateurConnecte")
+	@OneToMany(mappedBy = "utilisateur")
 	private List<ReservationTopo> listeReservationTopos = new ArrayList<ReservationTopo>();
 
-//	@OneToOne(mappedBy="utilisateurConnecte")
-//	private Reservation reservation;
-	
-	public UtilisateurConnecte() {
+	public Utilisateur() {
 		
 	}
 	
-	public UtilisateurConnecte(String adresseMail, String password) {
+	public Utilisateur(String adresseMail, String password) {
 		this.adresseMail = adresseMail;
 		this.password = password;
 	}
 	
-	public UtilisateurConnecte(String password, String nom, String prenom, String adresseMail, String adressePostal) {
+	public Utilisateur(String password, String nom, String prenom, 
+			String adresseMail, String adressePostal, boolean isMembreAssociation) {
 		this.password = password;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.adresseMail = adresseMail;
 		this.adressePostal = adressePostal;
+		this.isMembreAssociation = isMembreAssociation;
 	}
 
 	public String getPassword() {
@@ -74,13 +67,6 @@ public class UtilisateurConnecte {
 		this.id = idUtilisateurConnecte;
 	}
 	
-//	public List<Topo> getListeTopos() {
-//		return listeTopos;
-//	}
-//	public void setListeTopos(List<Topo> listeTopos) {
-//		this.listeTopos = listeTopos;
-//	}
-	
 	public List<Commentaire> getListeCommentaires() {
 		return listeCommentaires;
 	}
@@ -88,16 +74,8 @@ public class UtilisateurConnecte {
 	public void setListeCommentaires(List<Commentaire> listeCommentaires) {
 		this.listeCommentaires = listeCommentaires;
 	}
-
-//	public Reservation getReservation() {
-//		return reservation;
-//	}
-//
-//	public void setReservation(Reservation reservation) {
-//		this.reservation = reservation;
-//	}
-
-	public boolean isMembreAssociation() {
+	
+	public boolean getIsMembreAssociation() {
 		return isMembreAssociation;
 	}
 

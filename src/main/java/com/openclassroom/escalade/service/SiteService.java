@@ -7,11 +7,11 @@ import com.openclassroom.escalade.domain.Site;
 
 public interface SiteService {
 
-	public void initialize();
+	void initialize();
 	
-	Optional<Site> findById(Long id);
-	
-	public List<Site> getAllSites();
+	List<Site> getAllSites();
 	
 	List<Site> findAll();
+
+	Optional<Site> getSiteDetails(String siteId);
 }

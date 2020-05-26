@@ -1,6 +1,8 @@
+// pas encore utilisé
+
 package com.openclassroom.escalade.domain;
 
-public enum CotationBloc { // sinon les 2 enum pourraient hériter d'une interface afin d'éviter les classes abstraites
+public enum CotationBloc {
 	_4("4"), _4plus("4+"), _5("5"), _5plus("5+"), _6A("6A"), 
 	_6Aplus("6A+"), _6B("6B"), _6Bplus("6B+"), _6C("6C"), _6Cplus("6C+"), 
 	_7A("7A"), _7Aplus("7A+"), _7B("7B"), _7Bplus("7B+"), _7C("7C"), 

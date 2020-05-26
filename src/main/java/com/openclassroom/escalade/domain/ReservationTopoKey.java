@@ -1,3 +1,5 @@
+// pas encore utilisé
+
 package com.openclassroom.escalade.domain;
 
 import java.io.Serializable;
@@ -13,8 +15,8 @@ public class ReservationTopoKey implements Serializable {
 	@Column(name = "topo_id")
 	Long topoId;
 	 
-	@Column(name = "utilisateur_connecte_id")
-	Long utilisateurConnecteId;
+	@Column(name = "utilisateur_id")
+	Long utilisateurId;
 	 
 	public ReservationTopoKey() {
 		
@@ -28,12 +30,12 @@ public class ReservationTopoKey implements Serializable {
 		this.topoId = topoId;
 	}
 
-	public Long getUtilisateurConnecteId() {
-		return utilisateurConnecteId;
+	public Long getUtilisateurId() {
+		return utilisateurId;
 	}
 
-	public void setUtilisateurConnecteId(Long utilisateurConnecteId) {
-		this.utilisateurConnecteId = utilisateurConnecteId;
+	public void setUtilisateurConnecteId(Long utilisateurId) {
+		this.utilisateurId = utilisateurId;
 	}
 
 	@Override
@@ -41,7 +43,7 @@ public class ReservationTopoKey implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((topoId == null) ? 0 : topoId.hashCode());
-		result = prime * result + ((utilisateurConnecteId == null) ? 0 : utilisateurConnecteId.hashCode());
+		result = prime * result + ((utilisateurId == null) ? 0 : utilisateurId.hashCode());
 		return result;
 	}
 
@@ -59,10 +61,10 @@ public class ReservationTopoKey implements Serializable {
 				return false;
 		} else if (!topoId.equals(other.topoId))
 			return false;
-		if (utilisateurConnecteId == null) {
-			if (other.utilisateurConnecteId != null)
+		if (utilisateurId == null) {
+			if (other.utilisateurId != null)
 				return false;
-		} else if (!utilisateurConnecteId.equals(other.utilisateurConnecteId))
+		} else if (!utilisateurId.equals(other.utilisateurId))
 			return false;
 		return true;
 	}

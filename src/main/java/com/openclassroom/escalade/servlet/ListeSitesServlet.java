@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.openclassroom.escalade.service.SiteService;
 
+// accessible à partir de n'importe quelle page
 @WebServlet(name = "ListeSitesServlet", urlPatterns = { "/site" })
 public class ListeSitesServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +24,8 @@ public class ListeSitesServlet extends AbstractServlet {
 		this.siteService = siteService;
 	}
 	
+
+	// on récupère la liste de tous les sites
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setAttribute("listeDesSites", siteService.getAllSites());

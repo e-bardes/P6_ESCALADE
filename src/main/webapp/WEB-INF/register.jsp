@@ -25,11 +25,10 @@
 	</div>
 	
 	<section>
-			
-		<c:if test="${not empty adressemail}">
-		Champ(s) non valide(s). Veuillez réessayer.<br/>
-		</c:if>
-		<div class="container jumbotron bg-white mt-5 border" id="test">
+		
+		<!-- en cas d'erreur, le mot de passe est le seul champs qui n'est pas re-rempli automatiquement.
+			tous les champs sont obligatoires à part l'adresse postal -->
+		<div class="container bg-white mt-5 border" id="test">
 			<form action="<c:url value="/register" />" method="POST" class="col-4">
 				<div class="form-group">		
 					<label for="nom">Nom : <span class="requis">*</span></label> 
@@ -46,7 +45,7 @@
 					<label for="adressemail">Adresse mail : <span class="requis">*</span></label>
 					<input class="form-control" type="email" name="adressemail" id="adressemail" 
 						value="<c:out value="${utilisateur.adresseMail}"/>" required>
-					<span class="erreur">${form.erreurs['adressemail']}</span>
+					<span class="erreur">${erreurs['adressemail']}</span>
 				</div>
 				<div class="form-group">
 					<label for="adressepostal">Adresse postal : </label> 
@@ -56,16 +55,19 @@
 				<div class="form-group">
 					<label for="password">Mot de passe : <span class="requis">*</span></label> 
 					<input class="form-control" type="password" name="password" id="password" required>
-					<span class="erreur">${form.erreurs['password']}</span>
+					<span class="erreur">${erreurs['password']}</span>
 				</div>
 				<div class="form-group">
 					<label for="confirmation">Confirmation du mot de passe : <span class="requis">*</span></label> 
 					<input class="form-control" type="password" name="confirmation" id="confirmation" required>
 				</div>
+				<div class="form-group">
+					<label for="membreAssociation">Je suis un membre de l'association</label>
+					<input type="checkbox" id="membreAssociation" name="membreAssociation">
+				</div>
 				
 				<button class="btn btn-primary" type="submit"> Register </button> <br/>
 				
-				<p class="${empty erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>
 			</form>
 		</div>
 	
@@ -74,7 +76,6 @@
 	<div class="container">
       <%@ include file="/WEB-INF/common/footer.jspf" %>
     </div>
-		
-	<%@ include file="/WEB-INF/common/bootstrap.jspf" %>
+    
 </body>
 </html>

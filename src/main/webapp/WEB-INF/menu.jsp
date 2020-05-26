@@ -35,7 +35,6 @@
 	    <div class="container">
 	      <%@ include file="/WEB-INF/common/footer.jspf" %>
 	    </div>
-			
-		<%@ include file="/WEB-INF/common/bootstrap.jspf" %>
+
 	</body>
 </html>

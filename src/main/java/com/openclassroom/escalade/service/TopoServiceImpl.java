@@ -1,3 +1,5 @@
+// pas encore utilisé
+
 package com.openclassroom.escalade.service;
 
 import java.util.Arrays;
@@ -15,17 +17,11 @@ import com.openclassroom.escalade.repository.TopoRepository;
 @Service("topoService")
 public class TopoServiceImpl implements TopoService {
 	
-	private TopoRepository repository; // new HibernateTopoRepositoryImpl();
+	private TopoRepository repository;
 
 	public TopoServiceImpl() {
 		System.out.println("TopoServiceImpl no args contructor");	
 	}
-	
-	// pour l'injection de dépendances avec le constructeur
-//	public TopoServiceImpl(TopoRepository topoRepository) {
-//		System.out.println("TopoServiceImpl repository contructor");
-//		repository = topoRepository;
-//	}
 	
 	@PostConstruct
 	public void initialize() {

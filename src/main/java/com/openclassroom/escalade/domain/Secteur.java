@@ -1,3 +1,5 @@
+// pas encore utilisé
+
 package com.openclassroom.escalade.domain;
 
 import java.util.ArrayList;

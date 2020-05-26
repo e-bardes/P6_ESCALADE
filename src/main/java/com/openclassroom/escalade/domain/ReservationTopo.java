@@ -1,3 +1,5 @@
+// pas encore utilisé
+
 package com.openclassroom.escalade.domain;
 
 import javax.persistence.Column;
@@ -24,9 +26,9 @@ public class ReservationTopo {
 	Topo topo;
 	
 	@ManyToOne
-	@MapsId("utilisateur_connecte_id")
-	@JoinColumn(name = "utilisateur_connecte_id")
-	UtilisateurConnecte utilisateurConnecte;
+	@MapsId("utilisateur_id")
+	@JoinColumn(name = "utilisateur_id")
+	Utilisateur utilisateur;
 	
 	public ReservationTopo() {
 		
@@ -56,11 +58,11 @@ public class ReservationTopo {
 		this.topo = topo;
 	}
 
-	public UtilisateurConnecte getUtilisateurConnecte() {
-		return utilisateurConnecte;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setUtilisateurConnecte(UtilisateurConnecte utilisateurConnecte) {
-		this.utilisateurConnecte = utilisateurConnecte;
+	public void setUtilisateurConnecte(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 }

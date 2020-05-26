@@ -110,11 +110,4 @@ public class Site {
 	public void setListeVoies(List<Voie> listeVoies) {
 		this.listeVoies = listeVoies;
 	}
-
-	@Override
-	public String toString() {
-		return "l'id est " + id;
-	}	
-	
-	
 }

@@ -17,7 +17,7 @@ import com.openclassroom.escalade.repository.SiteRepository;
 @Service("siteService")
 public class SiteServiceImpl implements SiteService{
 	
-	private final static Logger logger = LogManager.getLogger();
+	// private final static Logger logger = LogManager.getLogger();
 	
 	private SiteRepository repository;
 	
@@ -65,9 +65,10 @@ public class SiteServiceImpl implements SiteService{
 	}
 
 	@Override
-	public Optional<Site> findById(Long id) {
-		return repository.findById(id);
+	public Optional<Site> getSiteDetails(String siteId) {
+		return repository.findById(Long.parseLong(siteId));
 	}
+	
 
 	@Override
 	public List<Site> getAllSites() {
@@ -78,13 +79,4 @@ public class SiteServiceImpl implements SiteService{
 	public List<Site> findAll() {
 		return repository.findAll();
 	}
-	
-//	@Autowired
-//	public SiteServiceImpl(TopoService topoService) {
-//		System.out.println("eezaaezezaaez");
-//		this.topoService = topoService;
-//	}
-	
-	
-	
 }

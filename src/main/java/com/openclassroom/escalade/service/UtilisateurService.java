@@ -1,33 +1,18 @@
 package com.openclassroom.escalade.service;
 
-import java.util.List;
-import java.util.Optional;
+import com.openclassroom.escalade.domain.Utilisateur;
 
-import javax.servlet.http.HttpServletRequest;
-
-import com.openclassroom.escalade.domain.UtilisateurConnecte;
-
-public interface UtilisateurConnecteService {
+public interface UtilisateurService {
 	
-	<S extends UtilisateurConnecte> S save(S entity);
+	Utilisateur isConnectionValid(String email, String password) throws Exception;
 	
-	// List<UtilisateurConnecte> findAll();
+	void isRegisterEmailValid(String email) throws Exception;
 	
-	UtilisateurConnecte findByAdresseMail(String adresseMail);
-//	List<UtilisateurConnecte> findByAdressePostal(String adressePostal);
-//	
-//	@Transactional
-//	List<UtilisateurConnecte> verificationInscription(String adresseMail, String adressePostal);
+	void isRegisterPasswordValid(String motDePasse, String confirmation) throws Exception;
 	
-	List<UtilisateurConnecte> findByAdresseMailOrAdressePostal(String adresseMail, String adressePostal);
+	Utilisateur addUser
+	(String password, String nom, String prenom, String adresseMail, 
+			String adressePostal, String membreAssociation, boolean isSaved);
 	
-	Optional<UtilisateurConnecte> findById(Long id);
-	
-	UtilisateurConnecte inscriptionUtilisateur(HttpServletRequest request);
-	
-	UtilisateurConnecte findByAdresseMailAndPassword(String email, String password);
-	
-	UtilisateurConnecte connexionUtilisateur(HttpServletRequest request);
-	
-	String getErreurConnexion();
+	Utilisateur searchUser(String email);
 }

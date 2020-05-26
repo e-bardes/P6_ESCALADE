@@ -1,23 +1,17 @@
 package com.openclassroom.escalade.servlet;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.domain.Commentaire;
-import com.openclassroom.escalade.domain.Site;
 import com.openclassroom.escalade.service.CommentaireService;
 import com.openclassroom.escalade.service.SiteService;
-import com.openclassroom.escalade.service.UtilisateurConnecteService;
+import com.openclassroom.escalade.service.UtilisateurService;
 
 @WebServlet(name = "DetailsSitesServlet", urlPatterns = { "/details-site" })
 public class DetailsSiteServlet extends AbstractServlet {
@@ -37,60 +31,33 @@ public class DetailsSiteServlet extends AbstractServlet {
 		this.commentaireService = commentaireService;
 	}
 	
-	private UtilisateurConnecteService utilisateurConnecteService;
-	
-	@Autowired
-	public void setUtilisateurConnecteService(UtilisateurConnecteService utilisateurConnecteService) {
-		this.utilisateurConnecteService = utilisateurConnecteService;
-	}
-	
 	// à partir de liste-sites.jsp
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		response.setContentType("text/html");
 		
-		String id = request.getParameter("id");
+		String siteId = request.getParameter("id");
 		
-		Site site = null;
-		for (Site nextSite : siteService.getAllSites()) {
-			if (nextSite.getId() == Long.parseLong(id)) {
-				site = nextSite;
-				break;
-			}
-		}
-		
-		HttpSession session = request.getSession(false);
-		session.setAttribute("site", site);
-		
-		session.setAttribute("listecommentaires", commentaireService.findBySite(
-				(Site) session.getAttribute("site")));
-		
-		RequestDispatcher disp = request.getRequestDispatcher("/WEB-INF/details-site.jsp");
-		disp.forward(request, response);
+		// on stocke en mémoire tous les attributs d'un site
+		request.setAttribute("site", siteService.getSiteDetails(siteId).orElse(null));
+		// on stocke tous les commentaires d'un site
+		request.setAttribute("listecommentaires", commentaireService.getCommentaries(null, siteId));
+		// on stocke tous les réponses de tous les commentaires d'un site
+		request.setAttribute("listerepcommentaires", 
+				commentaireService.getAllResponsesOfASite(siteId));
+	
+		request.getRequestDispatcher("/WEB-INF/details-site.jsp").forward(request, response);
 	}
 	
-	// à partir de commentaire.jsp
+	// à partir de détails-site.jsp
+	// suppression d'un commentaire par un admin
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		// response.setContentType("text/html");
-		
-		HttpSession session = request.getSession();
+		commentaireService.supprimerCommentaire(request.getParameter("commentaireId"));
+		response.sendRedirect(request.getContextPath() + "/details-site?id=" + 
+				request.getParameter("siteId"));
 
-		Commentaire commentaire = new Commentaire(
-				utilisateurConnecteService.findByAdresseMail((String) session.getAttribute("adressemail")),
-				(Site) session.getAttribute("site"),
-				request.getParameter("contenuDuCommentaire"));
-
-		commentaireService.save(commentaire);
-
-		session.setAttribute("listecommentaires", commentaireService.findBySite(
-				(Site) session.getAttribute("site")));
-		
-		System.out.println(session.getAttribute("listecommentaires"));
-		
-		RequestDispatcher disp = request.getRequestDispatcher("/WEB-INF/details-site.jsp");
-		disp.forward(request, response);
 	}
 }

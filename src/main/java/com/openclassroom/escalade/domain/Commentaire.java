@@ -1,13 +1,17 @@
 package com.openclassroom.escalade.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,19 +27,26 @@ public class Commentaire {
 	private String contenu;
 	
 	@ManyToOne
-	@JoinColumn(name="utilisateur_connecte_id", nullable = false)
-	private UtilisateurConnecte utilisateurConnecte;
+	@JoinColumn(name="utilisateur_id", nullable = false)
+	private Utilisateur utilisateur;
 	
 	@ManyToOne
 	@JoinColumn(name="site_id", nullable = false)
 	private Site site;
 	
+	@ManyToOne
+	@JoinColumn(name="commentaire_parent_id")
+	private Commentaire commentaireParent;
+
+	@OneToMany(targetEntity=Commentaire.class, mappedBy="commentaireParent", cascade={CascadeType.ALL})
+	private List<Commentaire> listeReponses = new ArrayList<Commentaire>();
+	
 	public Commentaire() {
 		
 	}
 	
-	public Commentaire(UtilisateurConnecte utilisateurConnecte, Site site, String contenu) {
-		this.utilisateurConnecte = utilisateurConnecte;
+	public Commentaire(Utilisateur utilisateur, Site site, String contenu) {
+		this.utilisateur = utilisateur;
 		this.site = site;
 		this.contenu = contenu;
 	}
@@ -48,19 +59,19 @@ public class Commentaire {
 		this.id = id;
 	}
 
-	public UtilisateurConnecte getUtilisateurConnecte() {
-		return utilisateurConnecte;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setUtilisateurConnecte(UtilisateurConnecte utilisateurConnecte) {
-		this.utilisateurConnecte = utilisateurConnecte;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	public Site getSite() {
 		return site;
 	}
 
-	public void setSite(Site site) {
+	public void setSite (Site site) {
 		this.site = site;
 	}
 
@@ -72,4 +83,19 @@ public class Commentaire {
 		this.contenu = contenu;
 	}
 
+	public Commentaire getCommentaireParent() {
+		return commentaireParent;
+	}
+
+	public void setCommentaireParent(Commentaire commentaireParent) {
+		this.commentaireParent = commentaireParent;
+	}
+
+	public List<Commentaire> getListeReponses() {
+		return listeReponses;
+	}
+
+	public void setListeReponses(List<Commentaire> listeReponses) {
+		this.listeReponses = listeReponses;
+	}
 }

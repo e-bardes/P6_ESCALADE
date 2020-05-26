@@ -1,3 +1,8 @@
+// pas encore utilisé
+// on peut aussi rendre la classe concrète et supprimer les deux classes qui héritnet de celle-ci
+// il y aurait donc les 2 énumérations liés à cette classe
+
+
 package com.openclassroom.escalade.domain;
 
 import java.util.ArrayList;

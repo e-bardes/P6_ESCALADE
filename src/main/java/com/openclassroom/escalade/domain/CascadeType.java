@@ -1,10 +1,13 @@
-package com.openclassroom.escalade.domain;
+// pas encore utilisé
 
-public enum CascadeType {
-	ALL,
-	PERSIST,
-	MERGE,
-	REMOVE,
-	REFRESH,
-	DETACH
-}
+
+//package com.openclassroom.escalade.domain;
+//
+//public enum CascadeType {
+//	ALL,
+//	PERSIST,
+//	MERGE,
+//	REMOVE,
+//	REFRESH,
+//	DETACH
+//}

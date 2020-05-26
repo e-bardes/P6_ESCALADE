@@ -1,7 +1,7 @@
+// pas encore utilisé
+
 package com.openclassroom.escalade.service;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -35,17 +35,17 @@ public class VoieServiceImpl implements VoieService {
 		VoieBloc voie7 = new VoieBloc();
 		VoieBloc voie8 = new VoieBloc();
 		VoieBloc voie9 = new VoieBloc();
-		voie1.setSecteur(secteurService.findById(1l).orElse(null));
-		voie2.setSecteur(secteurService.findById(2l).orElse(null));
-		voie3.setSecteur(secteurService.findById(3l).orElse(null));
-		voie4.setSecteur(secteurService.findById(4l).orElse(null));
-		voie5.setSecteur(secteurService.findById(4l).orElse(null));
-		voie6.setSecteur(secteurService.findById(5l).orElse(null));
-		voie7.setSecteur(secteurService.findById(5l).orElse(null));
-		voie8.setSecteur(secteurService.findById(6l).orElse(null));
-		voie9.setSecteur(secteurService.findById(7l).orElse(null));
-		List<VoieBloc> listeVoies = Arrays.asList(voie1, voie2, voie3, voie4, voie5, voie6, voie7, voie8, voie9);
-		repository.saveAll(listeVoies);
+//		voie1.setSecteur(secteurService.findById(1l).orElse(null));
+//		voie2.setSecteur(secteurService.findById(2l).orElse(null));
+//		voie3.setSecteur(secteurService.findById(3l).orElse(null));
+//		voie4.setSecteur(secteurService.findById(4l).orElse(null));
+//		voie5.setSecteur(secteurService.findById(4l).orElse(null));
+//		voie6.setSecteur(secteurService.findById(5l).orElse(null));
+//		voie7.setSecteur(secteurService.findById(5l).orElse(null));
+//		voie8.setSecteur(secteurService.findById(6l).orElse(null));
+//		voie9.setSecteur(secteurService.findById(7l).orElse(null));
+//		List<VoieBloc> listeVoies = Arrays.asList(voie1, voie2, voie3, voie4, voie5, voie6, voie7, voie8, voie9);
+//		repository.saveAll(listeVoies);
 	}
 	
 	

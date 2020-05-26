@@ -6,25 +6,21 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.openclassroom.escalade.domain.UtilisateurConnecte;
+import com.openclassroom.escalade.domain.Utilisateur;
 
-//@Transactional(readOnly = true)
-@Repository("utilisateurConnecteRepository")
-public interface UtilisateurConnecteRepository extends JpaRepository<UtilisateurConnecte, Long>{
+@Repository("utilisateurRepository")
+public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long>{
 
-	<S extends UtilisateurConnecte> S save(S entity);
+	<S extends Utilisateur> S save(S entity);
 	
-	// List<UtilisateurConnecte> findAll();
+	Utilisateur findByAdresseMail(String adresseMail);
 	
-	UtilisateurConnecte findByAdresseMail(String adresseMail);
-//	List<UtilisateurConnecte> findByAdressePostal(String adressePostal);
-	
-	List<UtilisateurConnecte> findByAdresseMailOrAdressePostal(String adresseMail, String adressePostal);
+	List<Utilisateur> findByAdresseMailOrAdressePostal(String adresseMail, String adressePostal);
 	
 	@Override 
-	Optional<UtilisateurConnecte> findById(Long id);
+	Optional<Utilisateur> findById(Long id);
 	
-	UtilisateurConnecte findByAdresseMailAndPassword(String email, String password);
+	Utilisateur findByAdresseMailAndPassword(String email, String password);
 	
 }
 

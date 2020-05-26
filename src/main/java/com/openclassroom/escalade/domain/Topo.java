@@ -1,3 +1,5 @@
+// pas encore utilisé
+
 package com.openclassroom.escalade.domain;
 
 import java.util.ArrayList;
@@ -35,17 +37,8 @@ import javax.persistence.Table;
 	@OneToMany(targetEntity=Site.class, mappedBy="topo")
 	public List<Site> listeSites = new ArrayList<Site>();
 	
-//	@ManyToMany
-//	@JoinTable(name="testdb.topo_utilisateur",
-//				joinColumns = @JoinColumn(name="id_topo"),
-//				inverseJoinColumns = @JoinColumn(name="id_utilisateur_connecte"))
-//	private List<UtilisateurConnecte> listeUtilisateurConnectes = new ArrayList<UtilisateurConnecte>();
-	
 	@OneToMany(mappedBy = "topo")
 	private List<ReservationTopo> listeReservationTopos = new ArrayList<ReservationTopo>();
-	
-//	@OneToOne(mappedBy="topo")
-//	private Reservation reservation;
 	
 	public Topo() {
 	}
