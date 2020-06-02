@@ -19,15 +19,15 @@
 </head>
 <body>
 	
-	<div class="container">
-		<%@ include file="/WEB-INF/common/header.jspf" %>
+	<div>
+		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 		<%@ include file="/WEB-INF/common/navigation.jspf" %>
 	</div>
 
 	<section>
     	<div class="container jumbotron bg-white mt-5 border" id="test">
 			
-			<form action="<c:url value="/login" />" method="POST" class="col-4">
+			<form action="<c:url value="/login" />" method="post" class="col-4">
 				<div class="form-group">
 					<label for="adressemail"> Email : </label> 
 					<input class="form-control" type="email" name="adressemail" id="adressemail"
@@ -52,7 +52,7 @@
 
     </section>
 	
-	<div class="container">
+	<div>
       <%@ include file="/WEB-INF/common/footer.jspf" %>
     </div>
 	

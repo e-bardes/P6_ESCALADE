@@ -14,7 +14,7 @@
   </head> 
 
   <body>
-	<nav class="row justify-content-center bg-light">
+	<!--  nav class="row justify-content-center bg-light">
 	  <ul class="nav nav-tabs justify-content-center col-7">
 	    <li class="nav-item">
 	      <a class="nav-link active" href="/escalade/">Menu</a>
@@ -34,7 +34,52 @@
 		  <a class="nav-link" href="<c:out value="topo"/>">Liste des topos</a>
 		</li>
 	  </ul>
-    </nav>
+    </nav  -->
+    
+    <!--class="container-fluid"-->
+    <div>
+    
+      <!-- navbar-expand pour affiche le menu en ligne -->
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      	<!-- titre -->
+      	<a class="navbar-brand" href="#">Les amis de l'escalade</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+         	aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <!-- îcone cliquable qui contient tous les liens -->
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- pour cacher les différents liens quand on bascule sur un affichage en ligne -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- mr pour séparer les différents items de la barre de recherche -->
+          <ul class="navbar-nav container d-flex">
+          	<li class="nav-item"><a class="nav-link " href="/escalade/">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link " href="site">Sites</a></li>
+            <li class="nav-item"><a class="nav-link " href="topo">Topos</a></li>
+          	<c:choose>
+          		<c:when test="${ empty sessionScope.sessionUtilisateur }">
+	         		<li class="nav-item dropdown">
+		             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" 
+		             	aria-expanded="false" role="button">Authentification</a>
+		             <div class="dropdown-menu">
+		               <a class="dropdown-item" href="login">Se connecter</a>
+		               <a class="dropdown-item" href="register">S'inscrire</a>
+		             </div>
+		            </li>
+          		</c:when>
+          		<c:otherwise>
+					<li class="nav-item">
+					<a class="nav-link" href="logout">Bonjour ${sessionScope.sessionUtilisateur.prenom} 
+						${sessionScope.sessionUtilisateur.nom} (Déconnexion)</a>
+					</li>
+          		</c:otherwise>
+          	</c:choose>
+          </ul>    
+        </div>
+      </nav>
+	</div>
   </body>
 
 </html>
+
+
+ 

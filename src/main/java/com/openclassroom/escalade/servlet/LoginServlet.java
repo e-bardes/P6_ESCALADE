@@ -22,7 +22,8 @@ public class LoginServlet extends AbstractServlet {
 	public static final String ERR = "erreurConnexion";
 	public static final String RESULT = "resultat";
 	public static final String SESSION_USER = "sessionUtilisateur";
-	public static final String VUE = "/WEB-INF/login.jsp";
+	public static final String VUE_FORM = "/WEB-INF/login.jsp";
+	public static final String VUE_SUCCESS = "/";
 	
 	public static final String CHAMP_MAIL = "adressemail";
 	public static final String CHAMP_PASS = "password";
@@ -61,29 +62,28 @@ public class LoginServlet extends AbstractServlet {
 		// si on tout est valide on peut stocker un l'utilisateur en session
 		if (erreurConnexion == null) {
 			session.setAttribute(SESSION_USER, utilisateur);
+			// si la case "se souvenir de moi" a été coché alors on va créer un cookie qui va être en vie pendant
+			// un mois et qui permettra de trouver un utilisateur par son email
+			if (memoire != null) {
+	        	Cookie cookie = new Cookie("email", adresseMail);
+	            cookie.setMaxAge(60 * 60 * 24 * 30);
+	            response.addCookie(cookie);
+	        }
+			response.sendRedirect(request.getContextPath() +  VUE_SUCCESS);
 		} else {
 			session.setAttribute(SESSION_USER, null);
+			
+			request.setAttribute(RESULT, resultat);
+			request.setAttribute(ERR, erreurConnexion);
+			request.setAttribute(USER, utilisateur);
+			
+			request.getRequestDispatcher(VUE_FORM).forward(request, response);
 		}
-		
-		request.setAttribute(RESULT, resultat);
-		request.setAttribute(ERR, erreurConnexion);
-		request.setAttribute(USER, utilisateur);
-		
-		// si la case "se souvenir de moi" a été coché alors on va créer un cookie qui va être en vie pendant
-		// un mois et qui permettra de trouver un utilisateur par son email
-		if (memoire != null) {
-        	Cookie cookie = new Cookie("email", adresseMail);
-            cookie.setMaxAge(60 * 60 * 24 * 30);
-            response.addCookie(cookie);
-        }
-		
-		request.getRequestDispatcher(VUE).forward(request, response);
-		
         
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		request.getRequestDispatcher(VUE).forward(request, response);
+		request.getRequestDispatcher(VUE_FORM).forward(request, response);
 	}
 }

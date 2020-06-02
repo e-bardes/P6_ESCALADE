@@ -13,7 +13,7 @@
 	<!-- class="border text-muted bg-light fixed-bottom row justify-content-center col-6"-->
 	<body>
 		<footer>
-			<div class="col-12 fixed-bottom bg-light border">
+			<div class="col-12 fixed-bottom bg-white border">
 				<p class="float-right">
 				<a href="#">Retourner en haut</a>
 				</p>

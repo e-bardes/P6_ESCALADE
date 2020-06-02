@@ -3,12 +3,12 @@
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page isELIgnored="false" %> 
+<%@ page isELIgnored="false" %>	
 
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8"	>
 	<title>Liste des topos</title>
 	<style type="text/css"><%@ include file="/style/style2.css" %></style>
 
@@ -18,20 +18,37 @@
 	 integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>	
-	<div class="container">
-		<%@ include file="/WEB-INF/common/header.jspf" %>
+	<div>
+		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 	</div>
 	
-	<div class="container sticky-top">
+	<div>
 			<%@ include file="/WEB-INF/common/navigation.jspf" %>
 	</div>
 	
 	<section>
-		<div class="container bg-white mt-5 mb-5 border">
+		<div class="container jumbotron bg-white mt-5 mb-5 border">
 			<h1>Description du site</h1>
+			
+			<c:if test="${ site.isOfficielLesAmisDeLescalade == true }">
+				<img src="<c:url value="img/isOfficielLesAmisDeLescalade.png"/>"  style="width:5%" />
+			</c:if>
+			
+			<c:if test="${sessionScope.sessionUtilisateur.isMembreAssociation == true}">
+				<c:choose>
+					<c:when test="${site.isOfficielLesAmisDeLescalade == true}">
+						<p><a href="<c:url value="modifierofficialisationSite?siteId=${site.id}"/>">
+						Desofficialiser ce site</a></p>
+					</c:when>
+					<c:otherwise>
+						<p><a href="<c:url value="modifierofficialisationSite?siteId=${site.id}"/>">
+						Officialiser ce site</a></p>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 		
 			<!-- description du site -->
-			<p>Nom: ${site.nom} <br/>
+			<p>Nom: ${site.departement} <br/>
 			Certification: ${site.isOfficielLesAmisDeLescalade} </p>
 			
 			<!-- pour ajouter un nouveau commentaire -->
@@ -59,11 +76,11 @@
 			        				</a></p>
 			        				<!-- suppression ou édition d'un commentaire par un admin -->
 			        				<c:if test="${sessionScope.sessionUtilisateur.isMembreAssociation == true}">
-										<form action="<c:url value="details-site?siteId=${site.id}&commentaireId=${commentaire.id}"/>" method="POST">
-											<input type="submit" value="Supprimer ce commentaire"/>
-										</form>
-					        			<p><a class="text-danger" 
-					        				href="<c:url value="postercommentaire?siteId=${site.id}&commentaireId=${commentaire.id}&isEditing=true"/>">
+										<p><a class="text-danger" 
+											 href="<c:url value="supprimercommentaire?siteId=${site.id}&commentaireId=${commentaire.id}"/>">
+											Supprimer ce commentaire</a></p>
+										<p><a class="text-danger" 
+					      					href="<c:url value="postercommentaire?siteId=${site.id}&commentaireId=${commentaire.id}&isEditing=true"/>">
 					        				Editer ce commentaire</a></p>
 			        				</c:if>
 			        			</div>
@@ -73,26 +90,26 @@
 			        		<c:forEach items="${listerepcommentaires}" var="repcommentaire">
 			        			<c:if test="${repcommentaire.commentaireParent.id == commentaire.id}">
 			        				<div class="collapse row" id="collapse${commentaire.id}">
+			        					<p class=col-12> Posté par ${repcommentaire.utilisateur.prenom} 
+												${repcommentaire.utilisateur.nom} : </p>
 					        			<div class="col-8 border text-break mb-3 ml-5 p-3">
-					        				<p>
-					        				Posté par ${repcommentaire.utilisateur.prenom} 
-												${repcommentaire.utilisateur.nom} :
-					        				${repcommentaire.contenu}</p>
-					        				<!-- suppression ou édition d'un commentaire par un admin -->
+					        				<p>${repcommentaire.contenu}</p>
+					        			</div>
+					        			<div class="col-3">
+						        			<!-- suppression ou édition d'un commentaire par un admin -->
 					        				<c:if test="${sessionScope.sessionUtilisateur.isMembreAssociation == true}">
-							        			<form action="<c:url value="details-site?siteId=${site.id}&commentaireId=${repcommentaire.id}"/>" method="POST">
-													<input type="submit" value="Supprimer ce commentaire"/>
-												</form>
+												<p><a class="text-danger" href="<c:url value="supprimercommentaire?siteId=${site.id}&commentaireId=${repcommentaire.id}"/>">
+												Supprimer ce commentaire</a></p>
 							        			<p><a class="text-danger" href="<c:url value="postercommentaire?siteId=${site.id}&commentaireId=${repcommentaire.id}&isEditing=true"/>">
 							        			Editer ce commentaire</a></p>
 					        				</c:if>
-					        			</div>
+				        				</div>
 				        			</div>
 			        			</c:if>
 			        		</c:forEach>
 				        </div>
 				        	<!-- pour pouvoir afficher ou masquer les réponses d'un commentaire -->
-				        	<c:if test="${!empty listerepcommentaires}">
+				        	<c:if test="${!empty commentaire.listeReponses}">
 				        		<div class="mb-3">
 						        	<a data-toggle="collapse" href="#collapse${commentaire.id}" 
 										 aria-expanded="false" aria-controls="collapse${commentaire.id}">
@@ -105,7 +122,7 @@
 		</div>
 	</section>
 
-	<div class="container">
+	<div>
       <%@ include file="/WEB-INF/common/footer.jspf" %>
     </div>
 </body>

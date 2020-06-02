@@ -19,8 +19,8 @@
 	 integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-	<div class="container">
-		<%@ include file="/WEB-INF/common/header.jspf" %>
+	<div>
+		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 		<%@ include file="/WEB-INF/common/navigation.jspf" %>
 	</div>
 	
@@ -28,7 +28,7 @@
 		
 		<!-- en cas d'erreur, le mot de passe est le seul champs qui n'est pas re-rempli automatiquement.
 			tous les champs sont obligatoires à part l'adresse postal -->
-		<div class="container bg-white mt-5 border" id="test">
+		<div class="container jumbotron bg-white mt-5 border" id="test">
 			<form action="<c:url value="/register" />" method="POST" class="col-4">
 				<div class="form-group">		
 					<label for="nom">Nom : <span class="requis">*</span></label> 
@@ -73,7 +73,7 @@
 	
 	</section>
 	
-	<div class="container">
+	<div>
       <%@ include file="/WEB-INF/common/footer.jspf" %>
     </div>
     

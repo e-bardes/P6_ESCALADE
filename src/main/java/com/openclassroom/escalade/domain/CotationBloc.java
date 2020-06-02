@@ -8,7 +8,7 @@ public enum CotationBloc {
 	_7A("7A"), _7Aplus("7A+"), _7B("7B"), _7Bplus("7B+"), _7C("7C"), 
 	_7Cplus("7C+"), _8A("8A"), _8Aplus("8A+"), _8B("8B"), _8Bplus("8B+"), 
 	_8C("8C"), _8Clus("8C+");
-	
+
 	private final String valeurCotation;
 	CotationBloc(String valeurCotation) {
 		this.valeurCotation = valeurCotation;

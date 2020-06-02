@@ -19,8 +19,8 @@
 </head>
 <body>
 	
-	<div class="container">
-		<%@ include file="/WEB-INF/common/header.jspf"%>
+	<div>
+		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 		<%@ include file="/WEB-INF/common/navigation.jspf"%>
 	</div>
 	
@@ -32,7 +32,7 @@
 		</div>
 	</section>
 		
-	<div class="container">
+	<div>
 		<%@ include file="/WEB-INF/common/footer.jspf"%>
 	</div>
 

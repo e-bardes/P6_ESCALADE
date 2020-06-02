@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.openclassroom.escalade.domain.Utilisateur;
-import com.openclassroom.escalade.service.CommentaireService;
+import com.openclassroom.escalade.service.GestionSitesService;
 
 @WebServlet(name = "CommentaireServlet", urlPatterns = { "/postercommentaire" })
 public class CommentaireServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
-	private CommentaireService commentaireService;
+	private GestionSitesService gestionSitesService;
 	
 	@Autowired
-	public void setCommentaireService(CommentaireService commentaireService) {
-		this.commentaireService = commentaireService;
+	public void setGestionSitesService(GestionSitesService gestionSitesService) {
+		this.gestionSitesService = gestionSitesService;
 	}
 	
 	
@@ -38,7 +38,7 @@ public class CommentaireServlet extends AbstractServlet {
 		// alors on aura besoin de charger en mémoire le commentaire entier pour pouvoir afficher son contenu
 		if(((String) request.getAttribute("isEditing")).contentEquals("true")) {
 			request.setAttribute("commentaire", 
-					commentaireService.getCommentary(Long.parseLong(commentaireId)).orElse(null));
+					gestionSitesService.getCommentary(Long.parseLong(commentaireId)).orElse(null));
 		}
 		
 		request.getRequestDispatcher("/WEB-INF/commentaire.jsp").forward(request, response);
@@ -55,9 +55,9 @@ public class CommentaireServlet extends AbstractServlet {
 
 		// on vérifie si est entrain d'éditer ou ajouter un commentaire
 		if (isEditing.contentEquals("true")) {
-			commentaireService.editerCommentaire(commentaireId, contenuDuCommentaire);
+			gestionSitesService.editerCommentaire(commentaireId, contenuDuCommentaire);
 		} else {
-			commentaireService.addCommentary(
+			gestionSitesService.addCommentary(
 				(Utilisateur) request.getSession().getAttribute("sessionUtilisateur"),
 				siteId,
 				contenuDuCommentaire,

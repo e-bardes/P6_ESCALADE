@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class Commentaire {
 	@JoinColumn(name="commentaire_parent_id")
 	private Commentaire commentaireParent;
 
-	@OneToMany(targetEntity=Commentaire.class, mappedBy="commentaireParent", cascade={CascadeType.ALL})
+	@OneToMany(targetEntity=Commentaire.class, mappedBy="commentaireParent", cascade={CascadeType.REMOVE}, fetch = FetchType.EAGER)
 	private List<Commentaire> listeReponses = new ArrayList<Commentaire>();
 	
 	public Commentaire() {

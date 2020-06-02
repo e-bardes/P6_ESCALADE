@@ -10,9 +10,13 @@ public interface UtilisateurService {
 	
 	void isRegisterPasswordValid(String motDePasse, String confirmation) throws Exception;
 	
-	Utilisateur addUser
+	Utilisateur saveUserInMemory
 	(String password, String nom, String prenom, String adresseMail, 
-			String adressePostal, String membreAssociation, boolean isSaved);
+			String adressePostal, String membreAssociation);
+	
+	void saveUserInData
+	(String password, String nom, String prenom, String adresseMail, 
+			String adressePostal, String membreAssociation);
 	
 	Utilisateur searchUser(String email);
 }

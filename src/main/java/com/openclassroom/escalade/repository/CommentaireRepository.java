@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.openclassroom.escalade.domain.Commentaire;
 import com.openclassroom.escalade.domain.Site;
 
-@Repository("commentaireResitory")
+@Repository("commentaireRepository")
 public interface CommentaireRepository extends JpaRepository<Commentaire, Long>{
 
 	@Override

@@ -9,26 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.service.CommentaireService;
-import com.openclassroom.escalade.service.SiteService;
-import com.openclassroom.escalade.service.UtilisateurService;
+import com.openclassroom.escalade.service.GestionSitesService;
 
 @WebServlet(name = "DetailsSitesServlet", urlPatterns = { "/details-site" })
 public class DetailsSiteServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private SiteService siteService;
+	private GestionSitesService gestionSitesService;
 	
 	@Autowired
-	public void setSiteService(SiteService siteService) {
-		this.siteService = siteService;
-	}
-	
-	private CommentaireService commentaireService;
-	
-	@Autowired
-	public void setCommentaireService(CommentaireService commentaireService) {
-		this.commentaireService = commentaireService;
+	public void setGestionSitesService(GestionSitesService gestionSitesService) {
+		this.gestionSitesService = gestionSitesService;
 	}
 	
 	// à partir de liste-sites.jsp
@@ -40,24 +31,17 @@ public class DetailsSiteServlet extends AbstractServlet {
 		String siteId = request.getParameter("id");
 		
 		// on stocke en mémoire tous les attributs d'un site
-		request.setAttribute("site", siteService.getSiteDetails(siteId).orElse(null));
+		System.out.println("a");
+		request.setAttribute("site", gestionSitesService.getSiteDetails(siteId).orElse(null));
 		// on stocke tous les commentaires d'un site
-		request.setAttribute("listecommentaires", commentaireService.getCommentaries(null, siteId));
+		System.out.println("a");
+		request.setAttribute("listecommentaires", gestionSitesService.getCommentaries(null, siteId));
 		// on stocke tous les réponses de tous les commentaires d'un site
+		System.out.println("a");
 		request.setAttribute("listerepcommentaires", 
-				commentaireService.getAllResponsesOfASite(siteId));
+				gestionSitesService.getAllResponsesOfASite(siteId));
+		System.out.println("a");
 	
 		request.getRequestDispatcher("/WEB-INF/details-site.jsp").forward(request, response);
-	}
-	
-	// à partir de détails-site.jsp
-	// suppression d'un commentaire par un admin
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-		commentaireService.supprimerCommentaire(request.getParameter("commentaireId"));
-		response.sendRedirect(request.getContextPath() + "/details-site?id=" + 
-				request.getParameter("siteId"));
-
 	}
 }

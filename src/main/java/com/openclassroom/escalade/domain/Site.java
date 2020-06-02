@@ -21,7 +21,7 @@ public class Site {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	private String nom;
+	private String departement;
 	@Column(name="is_officiel_les_amis_de_lescalade")
 	private boolean isOfficielLesAmisDeLescalade;
 
@@ -41,12 +41,12 @@ public class Site {
 	public Site() {
 	}
 
-	public Site(String nom) {
-		this.setNom(nom);
+	public Site(String departement) {
+		this.setDepartement(departement);
 	}
 	
-	public Site(String nom, Boolean isOfficielLesAmisDeLescalade) {
-		this.setNom(nom);
+	public Site(String departement, Boolean isOfficielLesAmisDeLescalade) {
+		this.setDepartement(departement);
 		this.setOfficielLesAmisDeLescalade(isOfficielLesAmisDeLescalade);
 	}
 
@@ -56,14 +56,6 @@ public class Site {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
 	}
 	
 	public boolean getIsOfficielLesAmisDeLescalade() {
@@ -109,5 +101,13 @@ public class Site {
 
 	public void setListeVoies(List<Voie> listeVoies) {
 		this.listeVoies = listeVoies;
+	}
+
+	public String getDepartement() {
+		return departement;
+	}
+
+	public void setDepartement(String departement) {
+		this.departement = departement;
 	}
 }

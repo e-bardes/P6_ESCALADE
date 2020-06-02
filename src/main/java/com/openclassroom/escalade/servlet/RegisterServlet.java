@@ -20,7 +20,7 @@ public class RegisterServlet extends AbstractServlet {
 	public static final String USER = "utilisateur";
 	public static final String ERR = "erreurs";
 	public static final String RESULT = "resultat";
-	public static final String VUE_SUCCESS = "/WEB-INF/registerSuccess.jsp";
+	public static final String VUE_SUCCESS = "/registersuccess";
 	public static final String VUE_FORM = "/WEB-INF/register.jsp";
 	
 	public static final String CHAMP_PASS = "password";
@@ -70,21 +70,20 @@ public class RegisterServlet extends AbstractServlet {
 		
 		request.setAttribute(ERR, erreurs);
 		
-		// si c'est un succès alors la méthode addUser en plus de stocker l'utilisateur dans un attribut
-		// va aussi l'enregistrer en bd
-		// en cas de succès on est rediriger vers un récapitulatif des informations remplises
-		// en cas d'échec le formulaire est chargé à nouveau avec l'affichage des erreurs
+		// si c'est un succès on enregistre l'utilisateur en base de donnée et on redirige vers une page
+		// qui va afficher un récapitulatif de l'inscription
+		// en cas d'échec on stocke les informations remplis en mémoire pour pouvoir afficher les erreurs et
+		// re-remplir les champs automatiquement au rechargement du formulaire
 		if (erreurs.isEmpty()) {
-			request.setAttribute(RESULT, "Succès de l'inscription.");
-			request.setAttribute(USER, 
-					utilisateurService.addUser(password, nom, prenom, adresseMail, 
-								adressePostal, membreAssociation, true));
-			request.getRequestDispatcher(VUE_SUCCESS).forward(request, response);
+			utilisateurService.saveUserInData(password, nom, prenom, adresseMail, 
+								adressePostal, membreAssociation);
+			response.sendRedirect(request.getContextPath() + VUE_SUCCESS + "?nom=" + nom + "&prenom="
+					+ prenom + "&adressePostal=" + adressePostal + "&adresseMail=" + adresseMail);
 		} else {
 			request.setAttribute(RESULT, "Echec de l'inscription.");
 			request.setAttribute(USER, 
-					utilisateurService.addUser(password, nom, prenom, adresseMail, 
-							adressePostal, membreAssociation, false));
+					utilisateurService.saveUserInMemory(password, nom, prenom, adresseMail, 
+							adressePostal, membreAssociation));
 			request.getRequestDispatcher(VUE_FORM).forward(request, response);
 		}
 ;

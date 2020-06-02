@@ -1,5 +1,7 @@
 package com.openclassroom.escalade.service;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +23,22 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 
 	@Autowired
 	public void setRepository(UtilisateurRepository repository) {
-		System.out.println("validation1");
 		this.repository = repository;
 	}
+	
+	@PostConstruct
+	public void initialize() {
+		Utilisateur membreAssociation = new Utilisateur("a", "a", "a", "a@a", "a", true);
+		Utilisateur utilisateurConnecte = new Utilisateur("b", "b", "b", "b@b", "b", false);
+		
+		repository.save(membreAssociation);
+		repository.save(utilisateurConnecte);
+		
+	}
+	
+	
+	
+	
 	
 	// vérification de la validité du mot de passe lors de l'inscription
 	public void isRegisterPasswordValid(String motDePasse, String confirmation) throws Exception{
@@ -43,18 +58,27 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 		}
 	}
 	
-	// renvoie un utilisateur qui va pouvoir être stockée en mémoire et le sauvegarde en bd si l'inscription est valide
-	public Utilisateur addUser(String password, String nom, String prenom, String adresseMail, 
-			String adressePostal, String membreAssociation, boolean isSaved) {
+	// renvoie un utilisateur qui va pouvoir être stockée en mémoire afficher de nouveau le formulaire
+	// d'inscription non valide
+	public Utilisateur saveUserInMemory(String password, String nom, String prenom, String adresseMail, 
+			String adressePostal, String membreAssociation) {
 		
 		boolean isMembreAssociation = false;
 		if (membreAssociation != null) isMembreAssociation = true;
 		
-		Utilisateur utilisateur = new Utilisateur
+		return new Utilisateur
 				(password, nom, prenom, adresseMail, adressePostal, isMembreAssociation);
-		if (isSaved) repository.save(utilisateur);
+	}
+	
+	// sauvegard l'utilisateur en base de donnée si la l'inscription réussi
+	public void saveUserInData(String password, String nom, String prenom, String adresseMail, 
+			String adressePostal, String membreAssociation) {
 		
-		return utilisateur;
+		boolean isMembreAssociation = false;
+		if (membreAssociation != null) isMembreAssociation = true;
+		
+		repository.save(new Utilisateur
+				(password, nom, prenom, adresseMail, adressePostal, isMembreAssociation));
 	}
 	
 	// vérifie que les identifiants soient corrects lors de la connexion

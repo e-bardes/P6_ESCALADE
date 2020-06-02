@@ -1,6 +1,5 @@
 package com.openclassroom.escalade.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,8 +13,6 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long>{
 	<S extends Utilisateur> S save(S entity);
 	
 	Utilisateur findByAdresseMail(String adresseMail);
-	
-	List<Utilisateur> findByAdresseMailOrAdressePostal(String adresseMail, String adressePostal);
 	
 	@Override 
 	Optional<Utilisateur> findById(Long id);

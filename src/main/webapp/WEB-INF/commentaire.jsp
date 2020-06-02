@@ -20,21 +20,20 @@
 </head>
 <body>
 	
-	<div class="container">
-		<%@ include file="/WEB-INF/common/header.jspf"%>
+	<div>
+		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 		<%@ include file="/WEB-INF/common/navigation.jspf"%>
 	</div>
 		
 	<section>
-		<div class="container bg-white mt-5 border">
+		<div class="container jumbotron bg-white mt-5 border">
 			<!-- différents affichages pour l'éditer ou la création d'un commentaire -->
 			<c:choose>
 				<c:when test="${param.isEditing == true}">
 					<form action="<c:url value="postercommentaire?siteId=${param.siteId}
 						&commentaireId=${param.commentaireId}&isEditing=true"/>" method="POST">
 						<p><label for="contenuDuCommentaire"> Contenu du commentaire : </label> </p>
-						<textarea name="contenuDuCommentaire" rows="10" cols="50">
-						<c:out value="${requestScope.commentaire.contenu}"/></textarea>
+						<textarea name="contenuDuCommentaire" rows="10" cols="50"><c:out value="${requestScope.commentaire.contenu}"/></textarea>
 						<input type="submit" value="Commenter"/>
 					</form>
 				</c:when>
@@ -50,7 +49,7 @@
 		</div>
 	</section>
 		
-	<div class="container">
+	<div>
 		<%@ include file="/WEB-INF/common/footer.jspf"%>
 	</div>
 

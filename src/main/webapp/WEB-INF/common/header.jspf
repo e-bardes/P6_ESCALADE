@@ -13,15 +13,18 @@
 	</head> 
 
 	<body>
-		<header class="bg-light">
-			<div id="estConnecte" class="container">
-				<c:if test="${!empty sessionScope.sessionUtilisateur}">
-				<p> Bonjour ${sessionScope.sessionUtilisateur.prenom} 
-					${sessionScope.sessionUtilisateur.nom} 
-				(<a href="logout">Déconnexion</a>)<br/> <p>
-				</c:if>
+		<header>
+			<div class="d-flex flex-row bg-secondary py-3">
+				<div class="col-2">
+					<c:if test="${!empty sessionScope.sessionUtilisateur}">
+						<p> Bonjour ${sessionScope.sessionUtilisateur.prenom} 
+							${sessionScope.sessionUtilisateur.nom} 
+						(<a href="logout">Déconnexion</a>) <p>
+					</c:if>
+				</div>
+				<h1 class="text-center col-8">Les amis de l'escalade</h1>
+				
 			</div>
-			<h1 class="text-center p-3 border">Les amis de l'escalade</h1>
 		</header>
 
 	</body>

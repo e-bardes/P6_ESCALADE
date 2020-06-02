@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,8 +23,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="testdb.voie")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Voie {
+public class Voie {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,6 +32,14 @@ public abstract class Voie {
 	@Column(name ="is_equipe")
 	private boolean isEquipe;
 	
+	@Enumerated(value = EnumType.STRING)
+	@Column(name="cotation_bloc")
+	private CotationBloc cotationBloc;
+
+	@Enumerated(value = EnumType.STRING)
+	@Column(name="cotation_falaise")
+	private CotationFalaise cotationFalaise;
+
 	@ManyToOne
 	@JoinColumn(name="secteur_id", nullable = true)
 	private Secteur secteur;
@@ -85,5 +93,21 @@ public abstract class Voie {
 
 	public void setListeLongueurs(List<Longueur> listeLongueurs) {
 		this.listeLongueurs = listeLongueurs;
+	}
+	
+	public CotationFalaise getCotationFalaise() {
+		return cotationFalaise;
+	}
+
+	public void setCotationFalaise(CotationFalaise cotationFalaise) {
+		this.cotationFalaise = cotationFalaise;
+	}
+	
+	public CotationBloc getCotationBloc() {
+		return cotationBloc;
+	}
+
+	public void setCotationBloc(CotationBloc cotationBloc) {
+		this.cotationBloc = cotationBloc;
 	}
 }

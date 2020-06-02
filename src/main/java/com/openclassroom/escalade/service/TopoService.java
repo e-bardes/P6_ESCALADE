@@ -10,7 +10,5 @@ import com.openclassroom.escalade.domain.Topo;
 public interface TopoService {
 	
 	public List<Topo> getAllTopos();
-	
-	Optional<Topo> findById(Long id);
 }
 

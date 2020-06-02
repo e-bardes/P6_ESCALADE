@@ -19,26 +19,27 @@
 	 integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-	<div class="container">
-		<%@ include file="/WEB-INF/common/header.jspf" %>
+	<div>
+		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 		<%@ include file="/WEB-INF/common/navigation.jspf" %>
 	</div>
 	
 	<!-- après s'être inscrit avec succès -->
 	<section>
 		<div class="container jumbotron bg-white mt-5 border">
-			<p>${ resultat }</p>
-            <p>Nom : <c:out value="${ utilisateur.nom }"/></p>
-            <p>Prénom : <c:out value="${ utilisateur.prenom }"/></p>
-            <p>Adresse : <c:out value="${ utilisateur.adressePostal }"/></p>
-            <p>Email : <c:out value="${ utilisateur.adresseMail}"/></p>
+            <p>Nom : <c:out value="${ requestScope.nom }"/></p>
+            <p>Prénom : <c:out value="${ requestScope.prenom }"/></p>
+            <c:if test="${ requestScope.adressePostal != '' }">
+            	<p>Adresse : <c:out value="${ requestScope.adressePostal }"/></p>
+            </c:if>
+            <p>Email : <c:out value="${ requestScope.adresseMail}"/></p>
             <p>Vous pouvez maintenant vous connecter.</p>
 		</div>
 	</section>
 	
 	
 	
-	<div class="container">
+	<div>
       <%@ include file="/WEB-INF/common/footer.jspf" %>
     </div>
 </body>
