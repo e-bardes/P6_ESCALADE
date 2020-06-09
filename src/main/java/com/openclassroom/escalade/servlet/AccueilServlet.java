@@ -10,16 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.service.CreationBD;
 import com.openclassroom.escalade.service.UtilisateurService;
-
 
 // exécuté lors du lancement du serveur
 // accessible à partir de n'importe quelle page
-@WebServlet(name = "AccueilServlet", urlPatterns = { "/" })
+@WebServlet(name = "AccueilServlet", urlPatterns = { "/accueil" })
 public class AccueilServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	UtilisateurService utilisateurService;
 
 	@Autowired
@@ -27,20 +25,21 @@ public class AccueilServlet extends AbstractServlet {
 		this.utilisateurService = utilisateurService;
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		// on vérifie si on peut connecter l'utilisateur automatiquement à partir d'un cookie
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("email")) {
-                	request.getSession().setAttribute(
-                			"sessionUtilisateur",
-                			utilisateurService.searchUser(cookie.getValue()));
-                }
-            }
-        }
-        request.getRequestDispatcher("/WEB-INF/menu.jsp").forward(request, response);
-    }
+
+		// on vérifie si on peut connecter l'utilisateur automatiquement à partir d'un
+		// cookie
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("email")) {
+					request.getSession().setAttribute("sessionUtilisateur",
+							utilisateurService.searchUser(cookie.getValue()));
+				}
+			}
+		}
+		request.getRequestDispatcher("/WEB-INF/menu.jsp").forward(request, response);
+	}
 }

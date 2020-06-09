@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,38 +17,44 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="testdb.site")
+@Table(name = "testdb.site")
 public class Site {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String departement;
-	@Column(name="is_officiel_les_amis_de_lescalade")
+	@Enumerated(value = EnumType.STRING)
+	private Departement departement;
+	@Column(unique = true)
+	private String nom;
+	@Column(length = 1000)
+	private String description;
+	@Column(name = "is_officiel_les_amis_de_lescalade")
 	private boolean isOfficielLesAmisDeLescalade;
+	@Column(name = "image_data")
+	private byte[] imageData;
+	@Column(name = "image_file_name")
+	String imageFileName;
 
 	@ManyToOne
-	@JoinColumn(name="topo_id", nullable = false)
+	@JoinColumn(name = "topo_id", nullable = false)
 	private Topo topo;
-	
-	@OneToMany(targetEntity=Secteur.class, mappedBy="site")
+
+	@OneToMany(targetEntity = Secteur.class, mappedBy = "site", fetch = FetchType.EAGER)
 	public List<Secteur> listeSecteurs = new ArrayList<Secteur>();
-	
-	@OneToMany(targetEntity=Commentaire.class, mappedBy="site")
+
+	@OneToMany(targetEntity = Commentaire.class, mappedBy = "site")
 	public List<Commentaire> listeCommentaires = new ArrayList<Commentaire>();
-	
-	@OneToMany(targetEntity=Voie.class, mappedBy="site")
+
+	@OneToMany(targetEntity = Voie.class, mappedBy = "site", fetch = FetchType.EAGER)
 	public List<Voie> listeVoies = new ArrayList<Voie>();
-	
+
 	public Site() {
 	}
 
-	public Site(String departement) {
-		this.setDepartement(departement);
-	}
-	
-	public Site(String departement, Boolean isOfficielLesAmisDeLescalade) {
+	public Site(String nom, Departement departement, Boolean isOfficielLesAmisDeLescalade) {
+		this.setNom(nom);
 		this.setDepartement(departement);
 		this.setOfficielLesAmisDeLescalade(isOfficielLesAmisDeLescalade);
 	}
@@ -57,12 +66,13 @@ public class Site {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public boolean getIsOfficielLesAmisDeLescalade() {
 		return isOfficielLesAmisDeLescalade;
 	}
 
-	// n'est pas détecté comme un get par les JSP EL -> javax.el.PropertyNotFoundException
+	// n'est pas détecté comme un get par les JSP EL ->
+	// javax.el.PropertyNotFoundException
 	public boolean isOfficielLesAmisDeLescalade() {
 		return isOfficielLesAmisDeLescalade;
 	}
@@ -103,11 +113,44 @@ public class Site {
 		this.listeVoies = listeVoies;
 	}
 
-	public String getDepartement() {
+	public Departement getDepartement() {
 		return departement;
 	}
 
-	public void setDepartement(String departement) {
+	public void setDepartement(Departement departement) {
 		this.departement = departement;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public byte[] getImageData() {
+		return imageData;
+	}
+
+	public void setImageData(byte[] imageData) {
+		this.imageData = imageData;
+	}
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+
 }

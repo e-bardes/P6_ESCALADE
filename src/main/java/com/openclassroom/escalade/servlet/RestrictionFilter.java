@@ -16,34 +16,37 @@ import javax.servlet.http.HttpSession;
 // filtre qui permet de rediriger vers une redirect-authentification.jsp si on tente d'ajouter un commentaire
 // en étant déconnecté.
 // à terme, il sera utilisé pour d'autres fonctionnalités qui demandent d'être authentifié
-@WebFilter( urlPatterns = "/postercommentaire" )
+@WebFilter(urlPatterns = { "/postercommentaire", "/modifierinformations" })
 public class RestrictionFilter implements Filter {
 
-    public RestrictionFilter() {
+	public RestrictionFilter() {
 
-    }
+	}
 
+	@Override
 	public void destroy() {
 
 	}
-	
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
 
-        HttpSession session = req.getSession();
+		HttpSession session = req.getSession();
 
-        if ( session.getAttribute( "sessionUtilisateur" ) == null ) {
-            res.sendRedirect( req.getContextPath() + "/redirectauthentification" );
+		if (session.getAttribute("sessionUtilisateur") == null) {
+			res.sendRedirect(req.getContextPath() + "/redirectauthentification");
 
-        } else {
-            chain.doFilter( req, res);
+		} else {
+			chain.doFilter(req, res);
 
-        }
+		}
 	}
 
+	@Override
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
 

@@ -10,12 +10,23 @@ public enum CotationBloc {
 	_8C("8C"), _8Clus("8C+");
 
 	private final String valeurCotation;
+	
 	CotationBloc(String valeurCotation) {
 		this.valeurCotation = valeurCotation;
 	}
 	public String getValeurCotation() {
 		return valeurCotation;
 	}
+	
+	public static CotationBloc from(String valeurCotation) {
+		for (CotationBloc c : CotationBloc.values()) {
+			if(c.getValeurCotation().equals(valeurCotation)) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return getValeurCotation();

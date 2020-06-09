@@ -54,6 +54,16 @@ public class Voie {
 	public Voie () {
 		
 	}
+	
+	public Voie(boolean isEquipe, CotationBloc cotationBloc) {
+		this.isEquipe = isEquipe;
+		this.cotationBloc = cotationBloc;
+	}
+	
+	public Voie(boolean isEquipe, CotationFalaise cotationFalaise) {
+		this.isEquipe = isEquipe;
+		this.cotationFalaise = cotationFalaise;
+	}
 
 	public Long getId() {
 		return id;

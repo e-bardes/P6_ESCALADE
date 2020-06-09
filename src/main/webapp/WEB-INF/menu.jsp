@@ -20,18 +20,18 @@
 		
 	</head>
 	<body>
-	  	<div>
+	  <div>
 			<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 			<%@ include file="/WEB-INF/common/navigation.jspf" %>
 		</div>
-		  
-	    <section class="text-center">
-	    	<div class="container jumbotron bg-white mt-5 border" id="test">
-	  			<p> Bienvenue sur le site ! </p>
-	  		</div>
-	
-	    </section>
-	  
+		
+
+    <section class="container">
+    	<div class="jumbotron bg-white mt-5 border min-vh-100">
+  			<p></p>
+  		</div>
+
+    </section>
 	    <div>
 	      <%@ include file="/WEB-INF/common/footer.jspf" %>
 	    </div>

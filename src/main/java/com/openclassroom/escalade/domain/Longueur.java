@@ -26,7 +26,7 @@ public class Longueur {
 	
 	@Enumerated(value = EnumType.STRING)
 	@Column(name="cotation_bloc")
-	private CotationBloc cotationbloc;
+	private CotationBloc cotationBloc;
 	
 	@Enumerated(value = EnumType.STRING)
 	@Column(name="cotation_falaise")
@@ -38,6 +38,14 @@ public class Longueur {
 	
 	public Longueur() {
 		
+	}
+	
+	public Longueur(CotationBloc cotationBloc) {
+		this.cotationBloc = cotationBloc;
+	}
+	
+	public Longueur(CotationFalaise cotationFalaise) {
+		this.cotationFalaise = cotationFalaise;
 	}
 
 	public Long getId() {
@@ -57,11 +65,11 @@ public class Longueur {
 	}
 	
 	public CotationBloc getCotationBloc() {
-		return cotationbloc;
+		return cotationBloc;
 	}
 
 	public void setCotationBloc(CotationBloc cotationbloc) {
-		this.cotationbloc = cotationbloc;
+		this.cotationBloc = cotationbloc;
 	}
 	
 	public CotationFalaise getCotationFalaise() {

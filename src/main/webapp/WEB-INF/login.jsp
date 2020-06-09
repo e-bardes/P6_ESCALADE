@@ -24,8 +24,8 @@
 		<%@ include file="/WEB-INF/common/navigation.jspf" %>
 	</div>
 
-	<section>
-    	<div class="container jumbotron bg-white mt-5 border" id="test">
+	<section class="container">
+    	<div class="jumbotron bg-white mt-5 border min-vh-100">
 			
 			<form action="<c:url value="/login" />" method="post" class="col-4">
 				<div class="form-group">

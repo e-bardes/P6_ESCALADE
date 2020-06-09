@@ -17,6 +17,16 @@ public enum CotationFalaise {
 	public String getValeurCotation() {
 		return valeurCotation;
 	}
+	
+	public static CotationFalaise from(String valeurCotation) {
+		for (CotationFalaise c : CotationFalaise.values()) {
+			if(c.getValeurCotation().equals(valeurCotation)) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return getValeurCotation();

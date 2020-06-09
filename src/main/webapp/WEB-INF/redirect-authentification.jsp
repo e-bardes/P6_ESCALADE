@@ -25,8 +25,8 @@
 	</div>
 	
 	<!-- quand on est redirigé, on a le choix entre se connecter ou s'inscrire -->	
-	<section>
-		<div class="container jumbotron bg-white mt-5 border">
+	<section class="container">
+		<div class="jumbotron bg-white mt-5 border min-vh-100">
 			<p><a href="<c:out value="login"/>">Se connecter</a></p>
 			<p><a href="<c:out value="register"/>">S'inscrire</a></p>
 		</div>

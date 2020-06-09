@@ -52,8 +52,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- mr pour séparer les différents items de la barre de recherche -->
           <ul class="navbar-nav container d-flex">
-          	<li class="nav-item"><a class="nav-link " href="/escalade/">Accueil</a></li>
-            <li class="nav-item"><a class="nav-link " href="site">Sites</a></li>
+          	<li class="nav-item"><a class="nav-link " href="accueil">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link " href="site?filtrage=false">Sites</a></li>
             <li class="nav-item"><a class="nav-link " href="topo">Topos</a></li>
           	<c:choose>
           		<c:when test="${ empty sessionScope.sessionUtilisateur }">
