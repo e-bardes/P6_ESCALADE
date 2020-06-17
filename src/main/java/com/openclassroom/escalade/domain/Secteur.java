@@ -5,6 +5,7 @@ package com.openclassroom.escalade.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,13 +26,15 @@ public class Secteur {
 	private Long id;
 	@Column(unique = true)
 	private String nom;
+	@Column(length = 1000)
 	private String description;
 
 	@ManyToOne
 	@JoinColumn(name = "site_id", nullable = false)
 	private Site site;
 
-	@OneToMany(targetEntity = Voie.class, mappedBy = "secteur", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Voie.class, mappedBy = "secteur", fetch = FetchType.EAGER, cascade = {
+			CascadeType.REMOVE })
 	public List<Voie> listeVoies = new ArrayList<Voie>();
 
 	public Secteur() {
@@ -40,6 +43,11 @@ public class Secteur {
 
 	public Secteur(String nom) {
 		this.nom = nom;
+	}
+
+	public Secteur(String nom, String description) {
+		this.nom = nom;
+		this.description = description;
 	}
 
 	public Long getId() {

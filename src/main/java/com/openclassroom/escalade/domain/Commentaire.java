@@ -16,36 +16,36 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="testdb.commentaire")
+@Table(name = "testdb.commentaire")
 public class Commentaire {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	
-	@Column(length=1000)
+
+	@Column(length = 1000)
 	private String contenu;
-	
+
 	@ManyToOne
-	@JoinColumn(name="utilisateur_id", nullable = false)
+	@JoinColumn(name = "utilisateur_id", nullable = false)
 	private Utilisateur utilisateur;
-	
+
 	@ManyToOne
-	@JoinColumn(name="site_id", nullable = false)
+	@JoinColumn(name = "site_id", nullable = false)
 	private Site site;
-	
+
 	@ManyToOne
-	@JoinColumn(name="commentaire_parent_id")
+	@JoinColumn(name = "commentaire_parent_id")
 	private Commentaire commentaireParent;
 
-	@OneToMany(targetEntity=Commentaire.class, mappedBy="commentaireParent", cascade={CascadeType.REMOVE}, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Commentaire.class, mappedBy = "commentaireParent", cascade = {
+			CascadeType.REMOVE }, fetch = FetchType.EAGER)
 	private List<Commentaire> listeReponses = new ArrayList<Commentaire>();
-	
+
 	public Commentaire() {
-		
+
 	}
-	
+
 	public Commentaire(Utilisateur utilisateur, Site site, String contenu) {
 		this.utilisateur = utilisateur;
 		this.site = site;
@@ -72,7 +72,7 @@ public class Commentaire {
 		return site;
 	}
 
-	public void setSite (Site site) {
+	public void setSite(Site site) {
 		this.site = site;
 	}
 

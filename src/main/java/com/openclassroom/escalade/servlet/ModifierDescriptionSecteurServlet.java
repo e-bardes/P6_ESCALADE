@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.openclassroom.escalade.service.GestionSitesService;
 
-@WebServlet(name = "ModifierDescriptionSecteurServlet", urlPatterns = { "/preeditionsecteur" })
+@WebServlet(name = "ModifierDescriptionSecteurServlet", urlPatterns = { "/modifierdescriptionsecteur" })
 public class ModifierDescriptionSecteurServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -23,9 +23,23 @@ public class ModifierDescriptionSecteurServlet extends AbstractServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		request.setAttribute("secteur", gestionSitesService.getSecteurDetails(request.getParameter("secteurId")));
 		request.getRequestDispatcher("/WEB-INF/modifier-description-secteur.jsp").forward(request, response);
+
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String secteurId = request.getParameter("secteurId");
+		long siteId = gestionSitesService.getSiteIdWithSecteurId(secteurId);
+
+		gestionSitesService.editerDescriptionSecteur(secteurId, request.getParameter("descriptionSecteur"));
+
+		response.sendRedirect(request.getContextPath() + "/modifierinformations?siteId=" + siteId);
 	}
 }

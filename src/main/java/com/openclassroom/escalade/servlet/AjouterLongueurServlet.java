@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.openclassroom.escalade.service.GestionSitesService;
 
-@WebServlet(name = "OfficialiserSiteServlet", urlPatterns = { "/modifierofficialisationSite" })
-public class OfficialiserSiteServlet extends AbstractServlet {
+@WebServlet(name = "AjouterLongueurServlet", urlPatterns = { "/ajouterlongueur" })
+public class AjouterLongueurServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
 	private GestionSitesService gestionSitesService;
@@ -23,12 +23,11 @@ public class OfficialiserSiteServlet extends AbstractServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html");
 
-		String siteId = request.getParameter("siteId");
-		gestionSitesService.modifierOfficialisation(siteId);
-		response.sendRedirect(request.getContextPath() + "/modifierinformations?siteId=" + siteId);
+		gestionSitesService.addLongueur(request.getParameter("cotation"), request.getParameter("voieId"));
+		response.sendRedirect(
+				request.getContextPath() + "/modifierinformations?siteId=" + request.getParameter("siteId"));
 	}
 }

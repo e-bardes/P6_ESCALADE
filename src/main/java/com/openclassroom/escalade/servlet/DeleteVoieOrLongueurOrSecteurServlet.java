@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.openclassroom.escalade.service.GestionSitesService;
 
-@WebServlet(name = "EnregistrementModificationsDescriptionSecteurServlet", urlPatterns = { "/posteditionsecteur" })
-public class EnregistrementModificationsDescriptionSecteurServlet extends AbstractServlet {
+@WebServlet(name = "DeleteVoieOrLongueurOrSecteurServlet", urlPatterns = { "/deletevoieorlongueurorsecteur" })
+public class DeleteVoieOrLongueurOrSecteurServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
 	private GestionSitesService gestionSitesService;
@@ -26,11 +26,17 @@ public class EnregistrementModificationsDescriptionSecteurServlet extends Abstra
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String secteurId = request.getParameter("secteurId");
-		long siteId = gestionSitesService.getSiteIdWithSecteurId(secteurId);
+		String secteur = request.getParameter("secteurId");
+		String voie = request.getParameter("voieId");
 
-		gestionSitesService.editerDescriptionSecteur(secteurId, request.getParameter("descriptionSecteur"));
+		if (secteur != null) {
+			gestionSitesService.deleteSecteur(secteur);
+		} else if (voie != null)
+			gestionSitesService.deleteVoie(voie);
+		else
+			gestionSitesService.deleteLongueur(request.getParameter("longueurId"));
 
-		response.sendRedirect(request.getContextPath() + "/modifierinformations?siteId=" + siteId);
+		response.sendRedirect(
+				request.getContextPath() + "/modifierinformations?siteId=" + request.getParameter("siteId"));
 	}
 }

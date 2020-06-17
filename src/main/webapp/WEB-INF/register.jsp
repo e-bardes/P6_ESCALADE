@@ -29,7 +29,7 @@
 		<!-- en cas d'erreur, le mot de passe est le seul champs qui n'est pas re-rempli automatiquement.
 			tous les champs sont obligatoires à part l'adresse postal -->
 		<div class="container jumbotron bg-white mt-5 border">
-			<form action="<c:url value="/register" />" method="POST" class="col-4">
+			<form action="<c:url value="/register" />" method="post" class="col-4">
 				<div class="form-group">		
 					<label for="nom">Nom : <span class="requis">*</span></label> 
 					<!-- c:out pour échapper les caractères spéciaux -->

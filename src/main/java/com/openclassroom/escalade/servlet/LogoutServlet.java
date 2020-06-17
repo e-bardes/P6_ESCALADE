@@ -2,7 +2,6 @@ package com.openclassroom.escalade.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -15,18 +14,20 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		request.getSession().invalidate();
-		
-		// on créer un cookie avec le même nom que quand on s'authentifie mais avec une durée de vie de 0 pour
+
+		// on créer un cookie avec le même nom que quand on s'authentifie mais avec une
+		// durée de vie de 0 pour
 		// que l'autre soit remplacé et celle là détruit instantanément
 		Cookie cookie = new Cookie("email", "");
 		cookie.setMaxAge(0);
 		response.addCookie(cookie);
-		
+
 		// on est redirigé vers l'accueil
-		response.sendRedirect("/escalade");
+		response.sendRedirect(request.getContextPath() + "/accueil");
 	}
 }

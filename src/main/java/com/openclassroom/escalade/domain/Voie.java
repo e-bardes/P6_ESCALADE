@@ -2,14 +2,13 @@
 // on peut aussi rendre la classe concrète et supprimer les deux classes qui héritnet de celle-ci
 // il y aurait donc les 2 énumérations liés à cette classe
 
-
 package com.openclassroom.escalade.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,45 +20,49 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
-@Table(name="testdb.voie")
+@Table(name = "testdb.voie")
 public class Voie {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name ="is_equipe")
+	@Column(name = "is_equipe")
 	private boolean isEquipe;
-	
+
 	@Enumerated(value = EnumType.STRING)
-	@Column(name="cotation_bloc")
+	@Column(name = "cotation_bloc")
 	private CotationBloc cotationBloc;
 
 	@Enumerated(value = EnumType.STRING)
-	@Column(name="cotation_falaise")
+	@Column(name = "cotation_falaise")
 	private CotationFalaise cotationFalaise;
 
 	@ManyToOne
-	@JoinColumn(name="secteur_id", nullable = true)
+	@JoinColumn(name = "secteur_id", nullable = true)
 	private Secteur secteur;
-	
+
 	@ManyToOne
-	@JoinColumn(name="site_id", nullable = true)
+	@JoinColumn(name = "site_id", nullable = true)
 	private Site site;
-	
-	@OneToMany(targetEntity=Longueur.class, mappedBy="voie")
+
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(targetEntity = Longueur.class, mappedBy = "voie", cascade = { CascadeType.REMOVE })
 	public List<Longueur> listeLongueurs = new ArrayList<Longueur>();
-	
-	public Voie () {
-		
+
+	public Voie() {
+
 	}
-	
+
 	public Voie(boolean isEquipe, CotationBloc cotationBloc) {
 		this.isEquipe = isEquipe;
 		this.cotationBloc = cotationBloc;
 	}
-	
+
 	public Voie(boolean isEquipe, CotationFalaise cotationFalaise) {
 		this.isEquipe = isEquipe;
 		this.cotationFalaise = cotationFalaise;
@@ -73,7 +76,7 @@ public class Voie {
 		this.id = id;
 	}
 
-	public boolean isEquipe() {
+	public boolean getIsEquipe() {
 		return isEquipe;
 	}
 
@@ -104,7 +107,7 @@ public class Voie {
 	public void setListeLongueurs(List<Longueur> listeLongueurs) {
 		this.listeLongueurs = listeLongueurs;
 	}
-	
+
 	public CotationFalaise getCotationFalaise() {
 		return cotationFalaise;
 	}
@@ -112,7 +115,7 @@ public class Voie {
 	public void setCotationFalaise(CotationFalaise cotationFalaise) {
 		this.cotationFalaise = cotationFalaise;
 	}
-	
+
 	public CotationBloc getCotationBloc() {
 		return cotationBloc;
 	}

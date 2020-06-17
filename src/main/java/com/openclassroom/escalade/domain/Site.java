@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "testdb.site")
 public class Site {
@@ -41,7 +44,8 @@ public class Site {
 	@JoinColumn(name = "topo_id", nullable = false)
 	private Topo topo;
 
-	@OneToMany(targetEntity = Secteur.class, mappedBy = "site", fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(targetEntity = Secteur.class, mappedBy = "site")
 	public List<Secteur> listeSecteurs = new ArrayList<Secteur>();
 
 	@OneToMany(targetEntity = Commentaire.class, mappedBy = "site")
@@ -53,10 +57,11 @@ public class Site {
 	public Site() {
 	}
 
-	public Site(String nom, Departement departement, Boolean isOfficielLesAmisDeLescalade) {
+	public Site(String nom, Departement departement, Boolean isOfficielLesAmisDeLescalade, String description) {
 		this.setNom(nom);
 		this.setDepartement(departement);
 		this.setOfficielLesAmisDeLescalade(isOfficielLesAmisDeLescalade);
+		this.setDescription(description);
 	}
 
 	public Long getId() {

@@ -1,5 +1,3 @@
-// pas encore utilisé
-
 package com.openclassroom.escalade.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +16,8 @@ public interface SecteurRepository extends JpaRepository<Secteur, Long> {
 	@Modifying
 	@Query("UPDATE Secteur s SET s.description = ?2 WHERE s.id = ?1")
 	void updateDescription(Long id, String description);
+
+	@Modifying
+	@Query("UPDATE Secteur s SET s.nom = ?2 WHERE s.id = ?1")
+	void updateNom(Long id, String nom);
 }

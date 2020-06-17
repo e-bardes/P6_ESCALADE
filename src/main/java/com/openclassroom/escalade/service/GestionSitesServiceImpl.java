@@ -416,4 +416,70 @@ public class GestionSitesServiceImpl implements GestionSitesService {
 	public void supprimerCommentaire(String commentaireId) {
 		commentaireRepository.deleteById(Long.parseLong(commentaireId));
 	}
+
+	@Override
+	@Transactional
+	public void deleteVoie(String voieId) {
+		voieRepository.deleteById(Long.parseLong(voieId));
+	}
+
+	@Override
+	@Transactional
+	public void deleteSecteur(String secteurId) {
+		secteurRepository.deleteById(Long.parseLong(secteurId));
+	}
+
+	@Override
+	@Transactional
+	public void deleteLongueur(String longueurId) {
+		longueurRepository.deleteById(Long.parseLong(longueurId));
+	}
+
+	@Override
+	public void addVoieInSecteur(String valeurCotation, String isEquipe, String secteurId) {
+
+		if (CotationBloc.from(valeurCotation) != null) {
+			Voie voie = new Voie(isEquipe != null, CotationBloc.from(valeurCotation));
+			voie.setSecteur(secteurRepository.findById(Long.parseLong(secteurId)).orElse(null));
+			voieRepository.save(voie);
+		} else {
+			Voie voie = new Voie(isEquipe != null, CotationFalaise.from(valeurCotation));
+			voie.setSecteur(secteurRepository.findById(Long.parseLong(secteurId)).orElse(null));
+			voieRepository.save(voie);
+		}
+	}
+
+	@Override
+	public void addVoieInSite(String valeurCotation, String isEquipe, String siteId) {
+
+		if (CotationBloc.from(valeurCotation) != null) {
+			Voie voie = new Voie(isEquipe != null, CotationBloc.from(valeurCotation));
+			voie.setSite(siteRepository.findById(Long.parseLong(siteId)).orElse(null));
+			voieRepository.save(voie);
+		} else {
+			Voie voie = new Voie(isEquipe != null, CotationFalaise.from(valeurCotation));
+			voie.setSite(siteRepository.findById(Long.parseLong(siteId)).orElse(null));
+			voieRepository.save(voie);
+		}
+	}
+
+	@Override
+	public void addLongueur(String valeurCotation, String voieId) {
+
+		if (CotationBloc.from(valeurCotation) != null) {
+			Longueur longueur = new Longueur(CotationBloc.from(valeurCotation));
+			longueur.setVoie(voieRepository.findById(Long.parseLong(voieId)).orElse(null));
+			longueurRepository.save(longueur);
+		} else {
+			Longueur longueur = new Longueur(CotationFalaise.from(valeurCotation));
+			longueur.setVoie(voieRepository.findById(Long.parseLong(voieId)).orElse(null));
+			longueurRepository.save(longueur);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void editerNomSecteur(String id, String nom) {
+		secteurRepository.updateNom(Long.parseLong(id), nom);
+	}
 }

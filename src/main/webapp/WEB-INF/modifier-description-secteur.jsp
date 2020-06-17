@@ -28,7 +28,7 @@
 	<section class="container">
 		<h1 class="text-center jumbotron p-4">Description du secteur</h1>
 		<div class="jumbotron bg-white mt-5 border min-vh-100">
-			<form action="<c:url value="posteditionsecteur?secteurId=${secteur.id}"/>" method="post">
+			<form action="<c:url value="modifierdescriptionsecteur?secteurId=${secteur.id}"/>" method="post">
 				<div class="form-group">
 					<textarea class="form-control" rows="20" name="descriptionSecteur"><c:out value="${secteur.description}"/></textarea>
 				</div>
