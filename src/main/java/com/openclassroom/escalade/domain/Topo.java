@@ -2,49 +2,51 @@
 
 package com.openclassroom.escalade.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="testdb.topo")
- public class Topo {
-	
+@Table(name = "testdb.topo")
+public class Topo {
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String nom;
-	@Lob
+	@Column(length = 1000)
 	private String description;
 	private String lieu;
-	@Column(name="date_de_parution")
-	private Date dateDeParution;
+	@Column(name = "date_de_parution")
+	private LocalDate dateDeParution;
 
-	@Column(name="is_disponible") // pas utile ça faudra juste vérifier que le topo n'est lié à aucun utilisateur je pense
+	@Column(name = "is_disponible") // pas utile ça faudra juste vérifier que le topo n'est lié à aucun utilisateur
+									// je pense
 									// même si l'état est indiqué dans l'énoncé
-	private boolean isDisponible; 
+	private boolean isDisponible;
 
-	@OneToMany(targetEntity=Site.class, mappedBy="topo")
-	public List<Site> listeSites = new ArrayList<Site>();
-	
-	@OneToMany(mappedBy = "topo")
-	private List<ReservationTopo> listeReservationTopos = new ArrayList<ReservationTopo>();
-	
+	@OneToMany(mappedBy = "topo", fetch = FetchType.EAGER)
+	private List<EmpruntTopo> listeEmpruntsTopo = new ArrayList<EmpruntTopo>();
+
 	public Topo() {
 	}
-	
-	public Topo(String nom) {
+
+	public Topo(String nom, String lieu, LocalDate dateDeParution, boolean isDisponible, String description) {
 		this.nom = nom;
+		this.lieu = lieu;
+		this.dateDeParution = dateDeParution;
+		this.isDisponible = isDisponible;
+		this.description = description;
 	}
 
 	public Long getId() {
@@ -79,15 +81,11 @@ import javax.persistence.Table;
 		this.lieu = lieu;
 	}
 
-	public Date getDateDeParution() {
-		return dateDeParution;
-	}
-
-	public void setDateDeParution(Date dateDeParution) {
-		this.dateDeParution = dateDeParution;
-	}
-
 	public boolean isDisponible() {
+		return isDisponible;
+	}
+
+	public boolean getIsDisponible() {
 		return isDisponible;
 	}
 
@@ -95,20 +93,20 @@ import javax.persistence.Table;
 		this.isDisponible = isDisponible;
 	}
 
-	public List<Site> getListeSites() {
-		return listeSites;
+	public List<EmpruntTopo> getListeEmpruntsTopo() {
+		return listeEmpruntsTopo;
 	}
 
-	public void setListeSites(List<Site> listeSites) {
-		this.listeSites = listeSites;
+	public void setListeEmpruntsTopo(List<EmpruntTopo> listeEmpruntsTopo) {
+		this.listeEmpruntsTopo = listeEmpruntsTopo;
 	}
 
-	public List<ReservationTopo> getListeReservationTopos() {
-		return listeReservationTopos;
+	public LocalDate getDateDeParution() {
+		return dateDeParution;
 	}
 
-	public void setListeReservationTopos(List<ReservationTopo> listeReservationTopos) {
-		this.listeReservationTopos = listeReservationTopos;
+	public void setDateDeParution(LocalDate dateDeParution) {
+		this.dateDeParution = dateDeParution;
 	}
+
 }
-

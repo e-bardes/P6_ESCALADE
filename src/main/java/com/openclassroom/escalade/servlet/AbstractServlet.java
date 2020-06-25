@@ -11,9 +11,9 @@ public abstract class AbstractServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-    public void init(ServletConfig config) throws ServletException {
-    	super.init(config);
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-    }
-    
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+	}
+
 }

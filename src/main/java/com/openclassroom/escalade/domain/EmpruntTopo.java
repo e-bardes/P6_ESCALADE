@@ -2,7 +2,6 @@
 
 package com.openclassroom.escalade.domain;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,43 +10,37 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "testdb.reservation_topo")
-public class ReservationTopo {
+@Table(name = "testdb.emprunt_topo")
+public class EmpruntTopo {
 
 	@EmbeddedId
-	ReservationTopoKey id;
-	
-	@Column(name = "is_possede")
-	private boolean isPossede;
-	
+	EmpruntTopoKey id;
+
 	@ManyToOne
 	@MapsId("topo_id")
 	@JoinColumn(name = "topo_id")
 	Topo topo;
-	
+
 	@ManyToOne
 	@MapsId("utilisateur_id")
 	@JoinColumn(name = "utilisateur_id")
 	Utilisateur utilisateur;
-	
-	public ReservationTopo() {
-		
+
+	public EmpruntTopo() {
+
 	}
 
-	public ReservationTopoKey getId() {
+	public EmpruntTopo(Topo topo, Utilisateur utilisateur) {
+		this.topo = topo;
+		this.utilisateur = utilisateur;
+	}
+
+	public EmpruntTopoKey getId() {
 		return id;
 	}
 
-	public void setId(ReservationTopoKey id) {
+	public void setId(EmpruntTopoKey id) {
 		this.id = id;
-	}
-
-	public boolean isPossede() {
-		return isPossede;
-	}
-
-	public void setPossede(boolean isPossede) {
-		this.isPossede = isPossede;
 	}
 
 	public Topo getTopo() {
@@ -62,7 +55,7 @@ public class ReservationTopo {
 		return utilisateur;
 	}
 
-	public void setUtilisateurConnecte(Utilisateur utilisateur) {
+	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
 }

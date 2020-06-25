@@ -12,13 +12,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="testdb.utilisateur")
+@Table(name = "testdb.utilisateur")
 public class Utilisateur {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String password;
 	private String nom;
 	private String prenom;
@@ -28,24 +28,24 @@ public class Utilisateur {
 	private String adressePostal;
 	@Column(name = "is_membre_association")
 	private boolean isMembreAssociation;
-	
-	@OneToMany(targetEntity=Commentaire.class, mappedBy="utilisateur")
+
+	@OneToMany(targetEntity = Commentaire.class, mappedBy = "utilisateur")
 	public List<Commentaire> listeCommentaires = new ArrayList<Commentaire>();
-	
+
 	@OneToMany(mappedBy = "utilisateur")
-	private List<ReservationTopo> listeReservationTopos = new ArrayList<ReservationTopo>();
+	private List<EmpruntTopo> listeEmpruntsTopo = new ArrayList<EmpruntTopo>();
 
 	public Utilisateur() {
-		
+
 	}
-	
+
 	public Utilisateur(String adresseMail, String password) {
 		this.adresseMail = adresseMail;
 		this.password = password;
 	}
-	
-	public Utilisateur(String password, String nom, String prenom, 
-			String adresseMail, String adressePostal, boolean isMembreAssociation) {
+
+	public Utilisateur(String password, String nom, String prenom, String adresseMail, String adressePostal,
+			boolean isMembreAssociation) {
 		this.password = password;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -57,16 +57,19 @@ public class Utilisateur {
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public Long getIdUtilisateurConnecte() {
 		return id;
 	}
+
 	public void setIdUtilisateurConnecte(Long idUtilisateurConnecte) {
 		this.id = idUtilisateurConnecte;
 	}
-	
+
 	public List<Commentaire> getListeCommentaires() {
 		return listeCommentaires;
 	}
@@ -74,7 +77,7 @@ public class Utilisateur {
 	public void setListeCommentaires(List<Commentaire> listeCommentaires) {
 		this.listeCommentaires = listeCommentaires;
 	}
-	
+
 	public boolean getIsMembreAssociation() {
 		return isMembreAssociation;
 	}
@@ -83,12 +86,12 @@ public class Utilisateur {
 		this.isMembreAssociation = isMembreAssociation;
 	}
 
-	public List<ReservationTopo> getListeReservationTopos() {
-		return listeReservationTopos;
+	public List<EmpruntTopo> getListeEmpruntsTopo() {
+		return listeEmpruntsTopo;
 	}
 
-	public void setListeReservationTopos(List<ReservationTopo> listeReservationTopos) {
-		this.listeReservationTopos = listeReservationTopos;
+	public void setListeEmpruntsTopo(List<EmpruntTopo> listeEmpruntsTopo) {
+		this.listeEmpruntsTopo = listeEmpruntsTopo;
 	}
 
 	public Long getId() {

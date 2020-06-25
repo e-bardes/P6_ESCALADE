@@ -11,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -39,10 +37,6 @@ public class Site {
 	private byte[] imageData;
 	@Column(name = "image_file_name")
 	String imageFileName;
-
-	@ManyToOne
-	@JoinColumn(name = "topo_id", nullable = false)
-	private Topo topo;
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(targetEntity = Secteur.class, mappedBy = "site")
@@ -84,14 +78,6 @@ public class Site {
 
 	public void setOfficielLesAmisDeLescalade(boolean isOfficielLesAmisDeLescalade) {
 		this.isOfficielLesAmisDeLescalade = isOfficielLesAmisDeLescalade;
-	}
-
-	public Topo getTopo() {
-		return topo;
-	}
-
-	public void setTopo(Topo topo) {
-		this.topo = topo;
 	}
 
 	public List<Secteur> getListeSecteurs() {

@@ -8,18 +8,31 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class ReservationTopoKey implements Serializable {
-	
+public class EmpruntTopoKey implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "topo_id")
 	Long topoId;
-	 
+
 	@Column(name = "utilisateur_id")
 	Long utilisateurId;
-	 
-	public ReservationTopoKey() {
-		
+
+	@Column(name = "is_Possesseur")
+	private boolean isPossesseur;
+
+	@Column(name = "is_possede")
+	private boolean isPossede;
+
+	public EmpruntTopoKey() {
+
+	}
+
+	public EmpruntTopoKey(boolean isPossesseur, boolean isPossede, Long topoId, Long utilisateurId) {
+		this.isPossesseur = isPossesseur;
+		this.isPossede = isPossede;
+		this.topoId = topoId;
+		this.utilisateurId = utilisateurId;
 	}
 
 	public Long getTopoId() {
@@ -36,6 +49,22 @@ public class ReservationTopoKey implements Serializable {
 
 	public void setUtilisateurConnecteId(Long utilisateurId) {
 		this.utilisateurId = utilisateurId;
+	}
+
+	public boolean getIsPossesseur() {
+		return isPossesseur;
+	}
+
+	public void setPossesseur(boolean isPossesseur) {
+		this.isPossesseur = isPossesseur;
+	}
+
+	public boolean getIsPossede() {
+		return isPossede;
+	}
+
+	public void setPossede(boolean isPossede) {
+		this.isPossede = isPossede;
 	}
 
 	@Override
@@ -55,7 +84,7 @@ public class ReservationTopoKey implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ReservationTopoKey other = (ReservationTopoKey) obj;
+		EmpruntTopoKey other = (EmpruntTopoKey) obj;
 		if (topoId == null) {
 			if (other.topoId != null)
 				return false;
@@ -68,8 +97,5 @@ public class ReservationTopoKey implements Serializable {
 			return false;
 		return true;
 	}
-	
-	 
-	
 
 }

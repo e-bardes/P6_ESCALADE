@@ -1,5 +1,7 @@
 package com.openclassroom.escalade.service;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,15 +13,20 @@ import org.springframework.stereotype.Service;
 import com.openclassroom.escalade.domain.CotationBloc;
 import com.openclassroom.escalade.domain.CotationFalaise;
 import com.openclassroom.escalade.domain.Departement;
+import com.openclassroom.escalade.domain.EmpruntTopo;
+import com.openclassroom.escalade.domain.EmpruntTopoKey;
 import com.openclassroom.escalade.domain.Longueur;
 import com.openclassroom.escalade.domain.Secteur;
 import com.openclassroom.escalade.domain.Site;
 import com.openclassroom.escalade.domain.Topo;
+import com.openclassroom.escalade.domain.Utilisateur;
 import com.openclassroom.escalade.domain.Voie;
+import com.openclassroom.escalade.repository.EmpruntTopoRepository;
 import com.openclassroom.escalade.repository.LongueurRepository;
 import com.openclassroom.escalade.repository.SecteurRepository;
 import com.openclassroom.escalade.repository.SiteRepository;
 import com.openclassroom.escalade.repository.TopoRepository;
+import com.openclassroom.escalade.repository.UtilisateurRepository;
 import com.openclassroom.escalade.repository.VoieRepository;
 
 @Service("creationBD")
@@ -60,22 +67,77 @@ public class CreationBD {
 		this.longueurRepository = longueurRepository;
 	}
 
+	private UtilisateurRepository repository;
+
+	@Autowired
+	public void setRepository(UtilisateurRepository repository) {
+		this.repository = repository;
+	}
+
+	private EmpruntTopoRepository empruntTopoRepository;
+
+	@Autowired
+	public void setEmpruntTopoRepository(EmpruntTopoRepository empruntTopoRepository) {
+		this.empruntTopoRepository = empruntTopoRepository;
+	}
+
 	public CreationBD() {
 	}
 
 	@PostConstruct
 	public void initialize() {
-		Topo topo1 = new Topo("region1");
-		Topo topo2 = new Topo("region2");
-		List<Topo> listeTopos = Arrays.asList(topo1, topo2);
+		Topo topo1 = new Topo("nom1", "lieu1", LocalDate.of(1983, Month.MARCH, 28), true,
+				"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis at pulvinar"
+						+ " vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Aliquam"
+						+ " erat volutpat. Nunc auctor. Mauris pretium quam et urna. Fusce nibh. Duis risus. Curabitur"
+						+ " sagittis hendrerit");
+		Topo topo2 = new Topo("nom2", "lieu2", LocalDate.of(1983, Month.MARCH, 29), false,
+				"Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis"
+						+ " quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum"
+						+ " id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque"
+						+ " pretium");
+		Topo topo3 = new Topo("nom3", "lieu3", LocalDate.of(1983, Month.MARCH, 30), true,
+				"Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio"
+						+ " urna, tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus"
+						+ " id velit ullamcorper pulvinar. Vestibulum fermentum tortor id mi. Pellentesque ipsum."
+						+ " Nulla");
+		Topo topo4 = new Topo("nom4", "lieu4", LocalDate.of(1983, Month.MARCH, 31), true,
+				"In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Duis sapien nunc, commodo et, interdum"
+						+ " suscipit, sollicitudin et, dolor. Pellentesque habitant morbi tristique senectus et netus"
+						+ " et malesuada fames ac turpis egestas. Aliquam id dolor. Class aptent taciti sociosqu ad"
+						+ " litora");
+		Topo topo5 = new Topo("nom5", "lieu5", LocalDate.of(1983, Month.APRIL, 1), false,
+				"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis at pulvinar "
+						+ "vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Aliquam erat"
+						+ " volutpat. Nunc auctor. Mauris pretium quam et urna. Fusce nibh. Duis risus. Curabitur"
+						+ " sagittis hendrerit");
+
+		Utilisateur membreAssociation = new Utilisateur("a", "b", "a", "a@b", "a", true);
+		Utilisateur utilisateurConnecte = new Utilisateur("b", "a", "b", "b@a", "b", false);
+
+		repository.save(membreAssociation);
+		repository.save(utilisateurConnecte);
+
+		EmpruntTopo empruntTopo1 = new EmpruntTopo(topo1, membreAssociation);
+
+		// topo1.getListeEmpruntsTopo().add(empruntTopo1);
+
+		List<Topo> listeTopos = Arrays.asList(topo1, topo2, topo3, topo4, topo5);
 		topoRepository.saveAll(listeTopos);
+
+		// si on le met avant de saugegarder les topos en bd on ne pourra pas récupérer
+		// l'id.
+		EmpruntTopoKey id1 = new EmpruntTopoKey(true, false, topo1.getId(), membreAssociation.getId());
+		empruntTopo1.setId(id1);
+
+		empruntTopoRepository.save(empruntTopo1);
 
 		Site site1 = new Site("nom1", Departement.alpes_de_haute_provence, true,
 				"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis at pulvinar "
 						+ "vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Aliquam erat"
 						+ " volutpat. Nunc auctor. Mauris pretium quam et urna. Fusce nibh. Duis risus. Curabitur"
 						+ " sagittis hendrerit");
-		Site site2 = new Site("nom2", Departement.gard, false,
+		Site site2 = new Site("nom2", Departement.finistere, false,
 				"Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio"
 						+ " urna, tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus"
 						+ " id velit ullamcorper pulvinar. Vestibulum fermentum tortor id mi. Pellentesque ipsum."
@@ -99,12 +161,6 @@ public class CreationBD {
 						+ " quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum"
 						+ " id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque"
 						+ " pretium");
-		site1.setTopo(topoRepository.findById(1l).orElse(null));
-		site2.setTopo(topoRepository.findById(2l).orElse(null));
-		site3.setTopo(topoRepository.findById(1l).orElse(null));
-		site4.setTopo(topoRepository.findById(2l).orElse(null));
-		site5.setTopo(topoRepository.findById(1l).orElse(null));
-		site6.setTopo(topoRepository.findById(1l).orElse(null));
 		List<Site> listeSites = Arrays.asList(site1, site2, site3, site4, site5, site6);
 		siteRepository.saveAll(listeSites);
 

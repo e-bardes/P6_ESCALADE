@@ -16,7 +16,8 @@ import javax.servlet.http.HttpSession;
 // filtre qui permet de rediriger vers une redirect-authentification.jsp si on tente d'ajouter un commentaire
 // en étant déconnecté.
 // à terme, il sera utilisé pour d'autres fonctionnalités qui demandent d'être authentifié
-@WebFilter(urlPatterns = { "/postercommentaire", "/modifierinformations" })
+@WebFilter(urlPatterns = { "/postercommentaire", "/modifierinformations", "/topospersonnel", "/toposdisponibles",
+		"/listedemandesreservation", "/toposdemandes" })
 public class RestrictionFilter implements Filter {
 
 	public RestrictionFilter() {
