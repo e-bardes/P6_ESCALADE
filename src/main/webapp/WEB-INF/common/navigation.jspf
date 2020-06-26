@@ -38,10 +38,10 @@
              <div class="dropdown-menu">
                <a class="dropdown-item" href="topospersonnel">Consulter les topos personnels</a>
                <a class="dropdown-item" href="toposdisponibles">Consulter les topos disponibles</a>
-               <a class="dropdown-item" href="toposdemandes">
+               <a class="dropdown-item" href="listedemandesreservationenvoyees">
                	Consulter les demandes de prêt envoyées
                </a>
-               <a class="dropdown-item" href="listedemandesreservation">
+               <a class="dropdown-item" href="listedemandesreservationrecues">
                	Consulter les demandes de prêt reçues
                </a>
              </div>

@@ -3,7 +3,6 @@ package com.openclassroom.escalade.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.openclassroom.escalade.domain.CotationBloc;
@@ -14,18 +13,19 @@ import com.openclassroom.escalade.domain.Voie;
 @Repository("voieRepository")
 public interface VoieRepository extends JpaRepository<Voie, Long> {
 
-	List<Voie> findByCotationBloc(@Param("cotation") CotationBloc cotation);
+	/*
+	 * Ces deux méthodes sont utilisés pour les critères de recherche après avoir
+	 * sélectionné une cotation spécifique
+	 */
 
-	List<Voie> findByCotationFalaise(@Param("cotation") CotationFalaise cotation);
+	List<Voie> findByCotationBloc(CotationBloc cotation);
 
-//	@Query("SELECT v FROM Voie v WHERE v.getCotationBloc() = :cotation OR v.getCotationFalaise() = :cotation")
-//	List<Voie> findByCotation(@Param("cotation") CotationBloc cotation);
+	List<Voie> findByCotationFalaise(CotationFalaise cotation);
 
-//	@Query("SELECT v, s FROM Voie v, Site s WHERE v.secteur.s IN ?1 OR v.s IN ?1")
-//	List<Site> findBySiteIn(List<Site> site);
-
+	/* Cette méthode va permettre de compter le nombre de voie d'un site */
 	long countBySite(Site site);
 
+	/* Cette méthode va permettre de supprimer une voie */
 	@Override
 	void deleteById(Long id);
 

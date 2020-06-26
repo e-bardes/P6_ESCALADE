@@ -32,6 +32,8 @@ public class ListeToposPersonnelsServlet extends AbstractServlet {
 		request.setAttribute("listedestopos", topoService
 				.getAllToposOfAUser(((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId()));
 		request.setAttribute("listeDepartements", Arrays.asList(Departement.values()));
+		request.setAttribute("curentUserId",
+				((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId());
 		request.getRequestDispatcher("/WEB-INF/liste-topos-personnels.jsp").forward(request, response);
 
 	}
@@ -43,8 +45,8 @@ public class ListeToposPersonnelsServlet extends AbstractServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		topoService.addTopo(request.getParameter("nomTopo"), request.getParameter("departement"),
-				request.getParameter("date"), request.getParameter("isDisponible"), request.getParameter("description"),
-				((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")));
+				request.getParameter("date"), request.getParameter("description"), request.getParameter("isDisponible"),
+				((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId());
 		response.sendRedirect(request.getContextPath() + "/topospersonnel");
 	}
 

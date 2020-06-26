@@ -27,11 +27,12 @@ public class ListeToposDisponiblesServlet extends AbstractServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Long id = ((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId();
+		Long utilisateurId = ((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId();
 
-		request.setAttribute("listedestopos", topoService.getAllToposDisponiblesWhichDontBelongToTheCurrentUser(id));
+		request.setAttribute("listedestopos",
+				topoService.getAllToposDisponiblesWhichDontBelongToTheCurrentUser(utilisateurId));
 
-		request.setAttribute("idSessionUtilisateur", id);
+		request.setAttribute("idSessionUtilisateur", utilisateurId);
 
 		request.getRequestDispatcher("/WEB-INF/liste-topos-disponibles.jsp").forward(request, response);
 	}
@@ -42,7 +43,7 @@ public class ListeToposDisponiblesServlet extends AbstractServlet {
 			throws ServletException, IOException {
 
 		topoService.demandeDeReservation(request.getParameter("topoId"),
-				(Utilisateur) request.getSession().getAttribute("sessionUtilisateur"));
+				((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId());
 		response.sendRedirect(request.getContextPath() + "/toposdisponibles");
 	}
 

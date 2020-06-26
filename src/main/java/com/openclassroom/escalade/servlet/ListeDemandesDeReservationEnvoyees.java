@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.openclassroom.escalade.domain.Utilisateur;
 import com.openclassroom.escalade.service.TopoService;
 
-@WebServlet(name = "ListeToposDemandesServlet", urlPatterns = { "/toposdemandes" })
-public class ListeToposDemandesServlet extends AbstractServlet {
+@WebServlet(name = "ListeDemandesDeReservationEnvoyees", urlPatterns = { "/listedemandesreservationenvoyees" })
+public class ListeDemandesDeReservationEnvoyees extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
 	private TopoService topoService;
@@ -27,17 +27,19 @@ public class ListeToposDemandesServlet extends AbstractServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		request.setAttribute("listetoposdemandes", topoService.getAllReservationDemandsSendOfAUser(
-				((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId()));
+		request.setAttribute("listedemandesreservationenvoyees", topoService.getAllReservationDemandsSendOfAUser(
+				(Utilisateur) request.getSession().getAttribute("sessionUtilisateur")));
 
-		request.getRequestDispatcher("/WEB-INF/liste-topos-demandes.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/liste-demandes-reservation-envoyees.jsp").forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.sendRedirect(request.getContextPath() + "/toposdemandes");
+		topoService.deleteAReservationDemand(request.getParameter("topoId"), request.getParameter("utilisateurId"));
+
+		response.sendRedirect(request.getContextPath() + "/listedemandesreservationenvoyees");
 	}
 
 }

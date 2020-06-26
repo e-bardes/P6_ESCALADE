@@ -35,6 +35,19 @@ public class Utilisateur {
 	@OneToMany(mappedBy = "utilisateur")
 	private List<EmpruntTopo> listeEmpruntsTopo = new ArrayList<EmpruntTopo>();
 
+//	@ManyToMany
+//	@JoinTable(name = "testdb.topo_booking", joinColumns = @JoinColumn(name = "utilisateur_id"), inverseJoinColumns = @JoinColumn(name = "topo_id"))
+//	private List<Topo> listeToposDemandes = new ArrayList<>();
+
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@OneToMany
+//	@JoinColumn(name = "owner_id")
+//	private List<Topo> ownedTopoList = new ArrayList<>();
+//
+//	@OneToMany
+//	@JoinColumn(name = "possesor_id")
+//	private List<Topo> possessedTopoList = new ArrayList<>();
+
 	public Utilisateur() {
 
 	}

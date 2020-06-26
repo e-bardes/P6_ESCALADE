@@ -33,27 +33,45 @@
 		<div class="jumbotron bg-white mt-5 border h-auto min-vh-100">
 
 			<div class="card-deck">
-				<c:forEach items="${listedemandesreservation}" var="demande">
-					<div class="mb-5 col-12">
-						<div class="card">
-							<div class="card-header text-center">
-								<h4 class="card-title">Demande de : ${demande.utilisateur.prenom} ${demande.utilisateur.nom}</h4>
-								<p class="card-title">${demande.utilisateur.adresseMail}</p>
-							</div>
-							<div class="card-body">				
-								<p class="card-text">Pour le topo : ${demande.topo.nom}</p>
-								<form action="<c:url value="listedemandesreservation?topoId=${demande.topo.id}"/>" method="post">
-										<button class="btn btn-primary" type="submit"> Accepter sa demande </button>
-								</form>
+				<c:forEach items="${listedemandesreservationrecues}" var="topo">
+					<c:forEach items="${topo.applicantList}" var="utilisateur">
+						<div class="mb-5 col-12">
+							<div class="card">
+								<div class="card-header text-center">
+									<h4 class="card-title">Demande de : ${utilisateur.prenom} ${utilisateur.nom}</h4>
+									<c:if test="${ not empty topo.possessor}">
+										<p class="card-title">Mail de contact: ${utilisateur.adresseMail}</p>
+									</c:if>
+								</div>
+								<div class="card-body">				
+									<p class="card-text">Pour le topo : ${topo.nom}</p>
+									<c:choose>
+										<c:when test="${empty topo.possessor}">
+											<form action="<c:url value="listedemandesreservationrecues?topoId=${topo.id}
+												&utilisateurId=${utilisateur.id}&acceptation=true"/>" method="post">
+												<button class="btn btn-success" type="submit"> Accepter sa demande </button>
+											</form>
+											<form action="<c:url value="listedemandesreservationrecues?topoId=${topo.id}
+												&utilisateurId=${utilisateur.id}&acceptation=false"/>" method="post">
+												<button class="btn btn-danger" type="submit"> Refuser sa demande </button>
+											</form>
+										</c:when>
+										<c:otherwise>
+											<form action="<c:url value="listedemandesreservationrecues?topoId=${topo.id}
+												&utilisateurId=${utilisateur.id}&acceptation=false"/>" method="post">
+												<button class="btn btn-danger" type="submit"> Supprimer le message </button>
+											</form>
+										</c:otherwise>
+									</c:choose>
+								</div>
 							</div>
 						</div>
-					</div>
+					</c:forEach>
 				</c:forEach>
 			</div>
 		</div>
 	</section>
-
-
+	
 	<div>
 		<%@ include file="/WEB-INF/common/footer.jspf"%>
 	</div>

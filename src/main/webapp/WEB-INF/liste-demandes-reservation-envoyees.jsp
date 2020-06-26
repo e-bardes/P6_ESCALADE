@@ -33,7 +33,7 @@
 		<div class="jumbotron bg-white mt-5 border h-auto min-vh-100">
 
 			<div class="card-deck">
-				<c:forEach items="${listetoposdemandes}" var="topo">
+				<c:forEach items="${listedemandesreservationenvoyees}" var="topo">
 					<div class="mb-5 col-12">
 						<div class="card">
 							<div class="card-header text-center">
@@ -43,14 +43,19 @@
 							</div>
 							<div class="card-body">				
 								<p class="card-text">${topo.description}</p>
-									<c:forEach items="${topo.listeEmpruntsTopo}" var="empruntTopo">
-										<c:if test="${empruntTopo.id.isPossede == false and empruntTopo.id.isPossesseur == false}">
-											<span class="text-success border p-2 mt-2"> Demande de réservation envoyée </span>
-										</c:if>
-										<c:if test="${empruntTopo.id.isPossede == true and empruntTopo.id.isPossesseur == false}">
-											<span class="text-success border p-2 mt-2"> Demande de réservation acceptée </span>
-										</c:if>
-									</c:forEach>
+								<c:choose>
+									<c:when test="${empty topo.possessor}">
+										<span class="text-success border p-2 mt-2"> Demande de réservation envoyée </span>
+									</c:when>
+									<c:when test="${(topo.possessor != topo.owner) and (not empty topo.possessor)}">
+										<span class="text-success border p-2 mt-2"> Demande de réservation acceptée </span>
+										<p class="card-text">Mail de contact: ${topo.owner.adresseMail}</p>
+										<form action="<c:url value="changementetatemprunt?topoId=${topo.id}
+											&utilisateurId=${topo.possessor.id}"/>" method="post">
+											<button class="btn btn-danger" type="submit"> Rendre le topo </button>
+										</form>
+									</c:when>
+								</c:choose>
 							</div>
 						</div>
 					</div>

@@ -84,4 +84,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public Utilisateur searchUser(String email) {
 		return repository.findByAdresseMail(email);
 	}
+
+//	@Override
+//	public Utilisateur searchUserById(Long id) {
+//		return repository.findById(id).orElse(null);
+//	}
 }

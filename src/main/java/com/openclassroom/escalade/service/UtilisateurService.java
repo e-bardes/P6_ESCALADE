@@ -18,4 +18,6 @@ public interface UtilisateurService {
 
 	Utilisateur searchUser(String email);
 
+//	Utilisateur searchUserById(Long id);
+
 }

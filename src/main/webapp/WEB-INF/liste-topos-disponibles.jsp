@@ -23,7 +23,6 @@
 <body class="bg-light">
 
 	<div>
-
 		<%@ include file="/WEB-INF/common/navigation.jspf"%>
 	</div>
 
@@ -43,41 +42,29 @@
 							</div>
 							<div class="card-body">				
 								<p class="card-text">${topo.description}</p>
-									<c:choose>
-										<c:when test="${empty topo.listeEmpruntsTopo}">
+									<c:set var="isAlreadyReserved" value="0" />
+									<c:forEach items="${topo.applicantList}" var="utilisateur">
+										<c:if test="${utilisateur.id == idSessionUtilisateur }">
+											<c:set var="isAlreadyReserved" value="${countEmpruntNotCurrentUser + 1}" />
+										</c:if>
+									</c:forEach>
+									<c:choose>			
+										<c:when test="${ isAlreadyReserved == 0}">
 											<form action="<c:url value="toposdisponibles?topoId=${topo.id}"/>" method="post">
 												<button class="btn btn-primary" type="submit"> Demande de réservation </button>
 											</form>
 										</c:when>
 										<c:otherwise>
-											<c:set var="countEmpruntNotCurrentUser" value="0" />
-											<c:set var="listeEmpruntsLength" value="0" />
-											<c:forEach items="${topo.listeEmpruntsTopo}" var="empruntTopo">
-												<c:if test="${not (empruntTopo.id.utilisateurId == idSessionUtilisateur) }">
-													<c:set var="countEmpruntNotCurrentUser" value="${countEmpruntNotCurrentUser + 1}" />
-												</c:if>
-												<c:set var="listeEmpruntsLength" value="${listeEmpruntsLength + 1}" />
-											</c:forEach>
-												<c:choose>			
-													<c:when test="${ countEmpruntNotCurrentUser == listeEmpruntsLength}">
-														<form action="<c:url value="toposdisponibles?topoId=${topo.id}"/>" method="post">
-																<button class="btn btn-primary" type="submit"> Demande de réservation </button>
-														</form>
-													</c:when>
-													<c:otherwise>
-														<span class="text-success border p-2 mt-2"> Demande de réservation envoyée </span>
-													</c:otherwise>
-												</c:choose>
-										</c:otherwise>	
+											<span class="text-success border p-2 mt-2"> Demande de réservation envoyée </span>
+										</c:otherwise>
 									</c:choose>
+								</div>
 							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</div>
 			</div>
-		</div>
-	</section>
-
+		</section>
 
 	<div>
 		<%@ include file="/WEB-INF/common/footer.jspf"%>

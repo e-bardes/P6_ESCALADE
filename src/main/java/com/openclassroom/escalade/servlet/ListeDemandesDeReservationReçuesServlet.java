@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.openclassroom.escalade.domain.Utilisateur;
 import com.openclassroom.escalade.service.TopoService;
 
-@WebServlet(name = "ListeDemandesDeReservationServlet", urlPatterns = { "/listedemandesreservation" })
-public class ListeDemandesDeReservationServlet extends AbstractServlet {
+@WebServlet(name = "ListeDemandesDeReservationReçuesServlet", urlPatterns = { "/listedemandesreservationrecues" })
+public class ListeDemandesDeReservationReçuesServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
 	private TopoService topoService;
@@ -27,22 +27,25 @@ public class ListeDemandesDeReservationServlet extends AbstractServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		request.setAttribute("listedemandesreservation", topoService.getAllDemandesDeReservationOfAUser(
+		request.setAttribute("listedemandesreservationrecues", topoService.getAllDemandesDeReservationReceveidOfAUser(
 				((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId()));
 
-		request.getRequestDispatcher("/WEB-INF/liste-demandes-reservation.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/liste-demandes-reservation-recues.jsp").forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String topoId = request.getParameter("topoId");
-
-		topoService.modifierDisponibilite(topoId);
-		topoService.attribuerTopo(((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId(),
-				topoId);
-		response.sendRedirect(request.getContextPath() + "/listedemandesreservation");
+		if (Boolean.parseBoolean(request.getParameter("acceptation")) == true) {
+			topoService.modifierDisponibilite(request.getParameter("topoId"),
+					Long.parseLong(request.getParameter("utilisateurId")));
+		} else {
+			topoService.deleteAReservationDemand(request.getParameter("topoId"), request.getParameter("utilisateurId"));
+		}
+//		topoService.attribuerTopo(((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId(),
+//				topoId);
+		response.sendRedirect(request.getContextPath() + "/listedemandesreservationrecues");
 	}
 
 }

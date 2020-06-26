@@ -40,23 +40,32 @@
 								<h4 class="card-title">${topo.nom}</h4>
 								<p class="card-text">${topo.lieu}</p>
 								<p class="card-text">Date de parution: ${topo.dateDeParution}</p>
-								<p class="card-text">Est disponible:
-									<c:choose>
-										<c:when test="${topo.isDisponible == true}">
-											<a href="<c:url value="modifierdisponibilitetopo?topoId=${topo.id}"/>"> 
-												<i class="fas fa-check"></i>
-												<i class="fas fa-times" style="opacity:0.2;"></i>
-											</a>	
-										</c:when>
-										<c:otherwise>
-											<a href="<c:url value="modifierdisponibilitetopo?topoId=${topo.id}"/>"> 
-												<i class="fas fa-check" style="opacity:0.2;"></i>
-												<i class="fas fa-times"></i>
-											</a>
-										</c:otherwise>
-									</c:choose>
-								</p>
-							</div>
+									<c:if test="${(topo.possessor.id != topo.owner.id) and (topo.possessor.id != null) and
+										topo.owner.id == curentUserId}">
+										<form action="<c:url value="changementetatemprunt?topoId=${topo.id}
+												&utilisateurId=${topo.possessor.id}"/>" method="post">
+											<button class="btn btn-success" type="submit"> Récupérer ce topo </button>
+										</form>
+									</c:if>	
+									<c:if test="${topo.owner.id == curentUserId}">
+										<c:choose>
+											<c:when test="${empty topo.possessor}">
+												<p class="card-text">Est disponible:
+												<a href="<c:url value="modifierdisponibilitetopo?topoId=${topo.id}"/>"> 
+													<i class="fas fa-check"></i>
+													<i class="fas fa-times" style="opacity:0.2;"></i>
+												</a>	
+											</c:when>
+											<c:otherwise>
+												<p class="card-text">Est disponible:
+												<a href="<c:url value="modifierdisponibilitetopo?topoId=${topo.id}"/>"> 
+													<i class="fas fa-check" style="opacity:0.2;"></i>
+													<i class="fas fa-times"></i>
+												</a>
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+								</div>
 							<div class="card-body">
 								<p class="card-text">${topo.description}</p>
 							</div>

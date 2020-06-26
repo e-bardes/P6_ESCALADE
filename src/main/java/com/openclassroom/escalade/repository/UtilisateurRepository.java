@@ -1,23 +1,20 @@
 package com.openclassroom.escalade.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.openclassroom.escalade.domain.Utilisateur;
 
 @Repository("utilisateurRepository")
-public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long>{
+public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
 
-	<S extends Utilisateur> S save(S entity);
-	
+	/*
+	 * Ces méthodes vont permettre de récupérer un utilisateur l'une grâce à son
+	 * adresseMail et la 2ème avec le mot de passe en plus
+	 */
+
 	Utilisateur findByAdresseMail(String adresseMail);
-	
-	@Override 
-	Optional<Utilisateur> findById(Long id);
-	
-	Utilisateur findByAdresseMailAndPassword(String email, String password);
-	
-}
 
+	Utilisateur findByAdresseMailAndPassword(String email, String password);
+
+}
