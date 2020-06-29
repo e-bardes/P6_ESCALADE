@@ -1,5 +1,3 @@
-// pas encore utilisé
-
 package com.openclassroom.escalade.service;
 
 import java.util.List;
@@ -7,7 +5,7 @@ import java.util.List;
 import com.openclassroom.escalade.domain.Topo;
 import com.openclassroom.escalade.domain.Utilisateur;
 
-public interface TopoService {
+public interface GestionTopoService {
 
 	List<Topo> getAllToposOfAUser(Long id);
 
@@ -23,8 +21,6 @@ public interface TopoService {
 	void modifierDisponibilite(String topoId, Long utilisateurId);
 
 	List<Topo> getAllDemandesDeReservationReceveidOfAUser(Long utilisateurId);
-
-//	void attribuerTopo(Long utilisateurId, String topoId);
 
 	void deleteAReservationDemand(String topoId, String utilisateurId);
 }

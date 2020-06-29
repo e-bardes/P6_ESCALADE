@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <style type="text/css">
 <%@include file="/style/style2.css"%></style>
-<title>Liste des Topos</title>
+<title>Demandes reçues</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -39,13 +39,18 @@
 							<div class="card">
 								<div class="card-header text-center">
 									<h4 class="card-title">Demande de : ${utilisateur.prenom} ${utilisateur.nom}</h4>
+									<!-- adresse mail affiché une fois  -->
 									<c:if test="${ not empty topo.possessor}">
-										<p class="card-title">Mail de contact: ${utilisateur.adresseMail}</p>
+										<p class="card-title">
+											Mail de contact: ${utilisateur.adresseMail}
+											Adresse postal: ${utilisateur.adressePostal}
+										</p>
 									</c:if>
 								</div>
 								<div class="card-body">				
 									<p class="card-text">Pour le topo : ${topo.nom}</p>
 									<c:choose>
+									<!-- si il n'y a pas de possesseur actuel (càd disponible et toujours en attente de réservation) -->
 										<c:when test="${empty topo.possessor}">
 											<form action="<c:url value="listedemandesreservationrecues?topoId=${topo.id}
 												&utilisateurId=${utilisateur.id}&acceptation=true"/>" method="post">

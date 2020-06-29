@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.site;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,34 +11,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.domain.Site;
-import com.openclassroom.escalade.service.GestionSitesService;
+import com.openclassroom.escalade.service.CriteriaSearchService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
 @WebServlet(name = "SearchServlet", urlPatterns = { "/search" })
 public class SearchServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private GestionSitesService gestionSitesService;
-	
-	@Autowired
-	public void setGestionSitesService(GestionSitesService gestionSitesService) {
-		this.gestionSitesService = gestionSitesService;
-	}
-	
 
+	private CriteriaSearchService criteriaSearchService;
+
+	@Autowired
+	public void setCriteriaSearchService(CriteriaSearchService criteriaSearchService) {
+		this.criteriaSearchService = criteriaSearchService;
+	}
+
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		List<String> criteriaList = new ArrayList<String>();
 		criteriaList.add(request.getParameter("departement"));
 		criteriaList.add(request.getParameter("cotation"));
 		criteriaList.add(request.getParameter("nombreSecteurs"));
 		criteriaList.add(request.getParameter("nombreVoies"));
-		
-		request.setAttribute("listeDesSites", gestionSitesService.searchSites(criteriaList));
-		
+
+		request.setAttribute("listeDesSites", criteriaSearchService.searchSites(criteriaList));
+
 		request.getRequestDispatcher("/site?filtrage=true").forward(request, response);
-		
-			
+
 	}
 }

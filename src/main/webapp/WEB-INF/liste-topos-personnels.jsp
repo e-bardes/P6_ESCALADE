@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <style type="text/css">
 <%@include file="/style/style2.css"%></style>
-<title>Liste des Topos</title>
+<title>Topos personnels</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -32,6 +32,7 @@
 		<h1 class="text-center jumbotron p-4">Liste des Topos personnels:</h1>
 		<div class="jumbotron bg-white mt-5 border h-auto min-vh-100">
 
+			<!-- liste des topos -->
 			<div class="card-deck">
 				<c:forEach items="${listedestopos}" var="topo">
 					<div class="mb-5 col-12">
@@ -40,9 +41,11 @@
 								<h4 class="card-title">${topo.nom}</h4>
 								<p class="card-text">${topo.lieu}</p>
 								<p class="card-text">Date de parution: ${topo.dateDeParution}</p>
+								<!-- option de récupération si le topo n'est pas en possession du propriétaire et qu'il est 
+									entre les mains d'un autre utilisateur -->
 									<c:if test="${(topo.possessor.id != topo.owner.id) and (topo.possessor.id != null) and
 										topo.owner.id == curentUserId}">
-										<form action="<c:url value="changementetatemprunt?topoId=${topo.id}
+										<form action="<c:url value="changement-etat-emprunt?topoId=${topo.id}
 												&utilisateurId=${topo.possessor.id}"/>" method="post">
 											<button class="btn btn-success" type="submit"> Récupérer ce topo </button>
 										</form>
@@ -74,6 +77,7 @@
 				</c:forEach>
 			</div>
 			
+			<!-- ajout d'un topo -->
 			<div class="container">
 				<button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapse">
 					<i class="fas fa-plus"></i><br>Ajouter un topo</button>

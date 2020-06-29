@@ -13,11 +13,11 @@
 	<!-- class="border text-muted bg-light fixed-bottom row justify-content-center col-6"-->
 	<body>
 		<footer>
-			<div class="col-12 bg-white border">
+			<div class="col-12 bg-dark border">
 				<p class="float-right">
 				<a href="#">Retourner en haut</a>
 				</p>
-				<p>Escalade</p>
+				<p>Les Amis de l'escalade</p>
 			</div>
 		</footer>
 		

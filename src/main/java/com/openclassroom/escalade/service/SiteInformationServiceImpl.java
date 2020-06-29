@@ -6,45 +6,20 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.openclassroom.escalade.domain.Commentaire;
 import com.openclassroom.escalade.domain.CotationBloc;
 import com.openclassroom.escalade.domain.CotationFalaise;
-import com.openclassroom.escalade.domain.Departement;
-import com.openclassroom.escalade.domain.Longueur;
 import com.openclassroom.escalade.domain.Secteur;
 import com.openclassroom.escalade.domain.Site;
-import com.openclassroom.escalade.domain.Utilisateur;
 import com.openclassroom.escalade.domain.Voie;
-import com.openclassroom.escalade.repository.CommentaireRepository;
-import com.openclassroom.escalade.repository.LongueurRepository;
 import com.openclassroom.escalade.repository.SecteurRepository;
 import com.openclassroom.escalade.repository.SiteRepository;
-import com.openclassroom.escalade.repository.TopoRepository;
 import com.openclassroom.escalade.repository.VoieRepository;
 
-@Service("gestionSitesService")
-public class GestionSitesServiceImpl implements GestionSitesService {
-
-	// private final static Logger logger = LogManager.getLogger();
-
-	CommentaireRepository commentaireRepository;
-
-	public CommentaireRepository getCommentaireRepository() {
-		return commentaireRepository;
-	}
-
-	@Autowired
-	public void setCommentaireRepository(CommentaireRepository commentaireRepository) {
-		this.commentaireRepository = commentaireRepository;
-	}
+@Service("siteInformationService")
+public class SiteInformationServiceImpl implements SiteInformationService {
 
 	SiteRepository siteRepository;
-
-	public SiteRepository getSiteRepository() {
-		return siteRepository;
-	}
 
 	@Autowired
 	public void setSiteRepository(SiteRepository siteRepository) {
@@ -53,10 +28,6 @@ public class GestionSitesServiceImpl implements GestionSitesService {
 
 	VoieRepository voieRepository;
 
-	public VoieRepository getVoieRepository() {
-		return voieRepository;
-	}
-
 	@Autowired
 	public void setVoieRepository(VoieRepository voieRepository) {
 		this.voieRepository = voieRepository;
@@ -64,42 +35,34 @@ public class GestionSitesServiceImpl implements GestionSitesService {
 
 	SecteurRepository secteurRepository;
 
-	public SecteurRepository getSecteurRepository() {
-		return secteurRepository;
-	}
-
 	@Autowired
 	public void setSecteurRepository(SecteurRepository secteurRepository) {
 		this.secteurRepository = secteurRepository;
 	}
 
-	private TopoRepository topoRepository;
-
-	public TopoRepository getTopoRepository() {
-		return topoRepository;
-	}
-
-	@Autowired
-	public void setTopoRepository(TopoRepository topoRepository) {
-		this.topoRepository = topoRepository;
-	}
-
-	public GestionSitesServiceImpl() {
+	public SiteInformationServiceImpl() {
 
 	}
 
-	private LongueurRepository longueurRepository;
-
-	public LongueurRepository getLongueurRepository() {
-		return longueurRepository;
+	@Override
+	public Optional<Site> getSiteDetails(String siteId) {
+		return siteRepository.findById(Long.parseLong(siteId));
 	}
 
-	@Autowired
-	public void setLongueurRepository(LongueurRepository longueurRepository) {
-		this.longueurRepository = longueurRepository;
+	@Override
+	public List<Site> getAllSites() {
+		return siteRepository.findByOrderByIdAsc();
 	}
 
-	// méthodes liées au repository Site
+	@Override
+	public Secteur getSecteurDetails(String secteurId) {
+		return secteurRepository.findById(Long.parseLong(secteurId)).orElse(null);
+	}
+
+	@Override
+	public Long getSiteIdWithSecteurId(String secteurId) {
+		return siteRepository.findBySecteurId(Long.parseLong(secteurId));
+	}
 
 	@Override
 	public List<Integer> getNbSecteursOfSelectedSites(List<Site> listeSites) {
@@ -110,7 +73,6 @@ public class GestionSitesServiceImpl implements GestionSitesService {
 		return listeNbSecteurs;
 	}
 
-	// ou alors on créer juste une variable int et on add à la fin de la boucle
 	@Override
 	public List<Integer> getNbVoiesOfSelectedSites(List<Site> listeSites) {
 		List<Integer> listeNbVoies = new ArrayList<Integer>();
@@ -128,6 +90,12 @@ public class GestionSitesServiceImpl implements GestionSitesService {
 	@Override
 	public List<List<Object>> getMinAndMaxCotationOfSelectedSites(List<Site> listeSites) {
 
+		// le but va être de remplir ces listes de façon à ce que l'index des cotations
+		// corresponde à celui de la liste des sites. On aura donc pour chaque index
+		// soit les cotations Bloc à null soit les cotation Falaise à null. Cela
+		// permettra au final de traverser toutes les listes avec un seule boucle dans
+		// une jsp. On stocke des Object car les deux types de cotations sont des
+		// énumérations différentes.
 		List<Object> listeCotationBlocMin = new ArrayList<Object>();
 		List<Object> listeCotationBlocMax = new ArrayList<Object>();
 		List<Object> listeCotationFalaiseMin = new ArrayList<Object>();
@@ -203,284 +171,5 @@ public class GestionSitesServiceImpl implements GestionSitesService {
 		cotationList.add(listeCotationFalaiseMax);
 
 		return cotationList;
-	}
-
-//	public Object lastIndex(List<Object> liste) {
-//		return liste.get(liste.size() -1);
-//	}
-
-	@Override
-	public Optional<Site> getSiteDetails(String siteId) {
-		return siteRepository.findById(Long.parseLong(siteId));
-	}
-
-	@Override
-	public List<Site> getAllSites() {
-		return siteRepository.findByOrderByIdAsc();
-	}
-
-	@Override
-	@Transactional
-	public void modifierOfficialisation(String siteId) {
-		Long id = Long.parseLong(siteId);
-
-		Site site = siteRepository.findById(id).orElse(null);
-
-		if (site.isOfficielLesAmisDeLescalade())
-			siteRepository.updateOfficialisation(id, false);
-		else
-			siteRepository.updateOfficialisation(id, true);
-	}
-
-	@Override
-	@Transactional
-	public void editerDescriptionSite(String id, String description) {
-		siteRepository.updateDescription(Long.parseLong(id), description);
-	}
-
-	// lié au secteur
-
-//	@Override
-//	@Transactional
-//	public Secteur getSecteurOfASite(String siteId, String nom) {
-//		return secteurRepository.findBySiteAndNom(siteRepository.findById(Long.parseLong(siteId)), nom);
-//	}
-
-	@Override
-	@Transactional
-	public void createSecteur(String siteId, String nom) {
-		Secteur secteur = new Secteur(nom);
-		secteur.setSite(siteRepository.findById(Long.parseLong(siteId)).orElse(null));
-		secteurRepository.save(secteur);
-	}
-
-	@Override
-	public Secteur getSecteurDetails(String secteurId) {
-		return secteurRepository.findById(Long.parseLong(secteurId)).orElse(null);
-	}
-
-	@Override
-	@Transactional
-	public void editerDescriptionSecteur(String id, String description) {
-		secteurRepository.updateDescription(Long.parseLong(id), description);
-	}
-
-	@Override
-	public Long getSiteIdWithSecteurId(String secteurId) {
-		return siteRepository.findBySecteurId(Long.parseLong(secteurId));
-	}
-
-	@Override
-	@Transactional
-	public List<Site> searchSites(List<String> criteriaList) {
-
-		int nbCritereVide = 0;
-		for (String s : criteriaList) {
-			if (s.isEmpty())
-				nbCritereVide++;
-		}
-		if (nbCritereVide == criteriaList.size())
-			return siteRepository.findByOrderByIdAsc();
-
-		List<Site> listeSites = new ArrayList<Site>();
-
-		String departement = criteriaList.get(0);
-		String cotation = criteriaList.get(1);
-		String minimumSecteurNb = criteriaList.get(2);
-		String minimumVoieNb = criteriaList.get(3);
-
-		if (!(departement.isEmpty())) {
-			listeSites.addAll(searchWithDepartement(departement));
-			if (!(cotation.isEmpty()))
-				listeSites.retainAll(searchWithCotation(cotation, listeSites));
-			if (!(minimumSecteurNb.isEmpty()))
-				listeSites.retainAll(searchWithMinimumSecteurNb(minimumSecteurNb, listeSites));
-			if (!(minimumVoieNb.isEmpty()))
-				listeSites.retainAll(searchWithMinimumVoieNb(minimumVoieNb, listeSites));
-		} else if (!(cotation.isEmpty())) {
-			listeSites.addAll(searchWithCotation(cotation, siteRepository.findAll()));
-			if (!(minimumSecteurNb.isEmpty()))
-				listeSites.retainAll(searchWithMinimumSecteurNb(minimumSecteurNb, listeSites));
-			if (!(minimumVoieNb.isEmpty()))
-				listeSites.retainAll(searchWithMinimumVoieNb(minimumVoieNb, listeSites));
-		} else if (!(minimumSecteurNb.isEmpty())) {
-			listeSites.addAll(searchWithMinimumSecteurNb(minimumSecteurNb, siteRepository.findAll()));
-			if (!(minimumVoieNb.isEmpty()))
-				listeSites.retainAll(searchWithMinimumVoieNb(minimumVoieNb, listeSites));
-		} else if (!(minimumVoieNb.isEmpty())) {
-			listeSites.addAll(searchWithMinimumVoieNb(minimumVoieNb, siteRepository.findAll()));
-		}
-		return listeSites;
-	}
-
-	public List<Site> searchWithDepartement(String criteria) {
-		return siteRepository.findByDepartement(Departement.from(criteria));
-	}
-
-	@Transactional
-	public List<Site> searchWithCotation(String criteria, List<Site> listeSites) {
-		List<Voie> listeVoies = new ArrayList<Voie>();
-		List<Longueur> listeLongueurs = new ArrayList<Longueur>();
-
-		CotationBloc cotationBloc = CotationBloc.from(criteria);
-		CotationFalaise cotationFalaise = CotationFalaise.from(criteria);
-
-		if (cotationBloc == null) {
-			listeVoies.addAll(voieRepository.findByCotationFalaise(cotationFalaise));
-			listeLongueurs.addAll(longueurRepository.findByCotationFalaise(cotationFalaise));
-		} else {
-			listeVoies.addAll(voieRepository.findByCotationBloc(cotationBloc));
-			listeLongueurs.addAll(longueurRepository.findByCotationBloc(cotationBloc));
-		}
-		return siteRepository.findByVoieOrLongueur(listeVoies, listeLongueurs, listeSites);
-	}
-
-	@Transactional
-	public List<Site> searchWithMinimumSecteurNb(String criteria, List<Site> listeSites) {
-		List<Site> listeSitesTemp = new ArrayList<Site>();
-		for (Site s : listeSites) {
-			long nbSecteurs = secteurRepository.countBySite(s);
-			if (nbSecteurs >= Long.parseLong(criteria)) {
-				listeSitesTemp.add(s);
-			}
-		}
-		return listeSitesTemp;
-	}
-
-	@Transactional
-	public List<Site> searchWithMinimumVoieNb(String criteria, List<Site> listeSites) {
-		List<Site> listeSitesTemp = new ArrayList<Site>();
-		for (Site s : listeSites) {
-			long nbVoies = voieRepository.countBySite(s);
-			if (nbVoies >= Long.parseLong(criteria)) {
-				listeSitesTemp.add(s);
-			}
-		}
-		return listeSitesTemp;
-	}
-
-	// méthodes liés aux repositories Commentaire et Site
-
-	// si commentaireParent == null, on récupère tous les commentaires principaux
-	// d'un site
-	// sinon on récupère toutes les réponses d'un commentaire spécifique
-	@Override
-	@Transactional
-	public List<Commentaire> getCommentaries(Commentaire commentaireParent, String siteId) {
-		return commentaireRepository.findByCommentaireParentAndSite(commentaireParent,
-				siteRepository.findById(Long.parseLong(siteId)).orElse(null));
-	}
-
-	// on récupère toutes les réponses de tous les commentaires d'un site spécifique
-	@Override
-	@Transactional
-	public List<Commentaire> getAllResponsesOfASite(String siteId) {
-		return commentaireRepository
-				.findAllResponsesOfASite(siteRepository.findById(Long.parseLong(siteId)).orElse(null));
-	}
-
-	// on créer en commentaire en définissant si c'est un nouveau ou une réponse
-	// d'un autre puis on le sauvegard en bd
-	@Override
-	@Transactional
-	public void addCommentary(Utilisateur utilisateur, String siteId, String contenu, String commentaireId) {
-
-		Commentaire commentaire = new Commentaire(utilisateur,
-				siteRepository.findById(Long.parseLong(siteId)).orElse(null), contenu);
-
-		if (!(commentaireId.contentEquals("null"))) {
-			commentaire
-					.setCommentaireParent(commentaireRepository.findById(Long.parseLong(commentaireId)).orElse(null));
-		}
-
-		commentaireRepository.save(commentaire);
-	}
-
-	// méthodes liés au repository Commentaire
-
-	@Override
-	public Optional<Commentaire> getCommentary(Long id) {
-		return commentaireRepository.findById(id);
-	}
-
-	// annotation transactional obligatoire pour update ou delete
-	// ces deux méthodes sont utilisés uniquement par un membre de l'association
-
-	@Override
-	@Transactional
-	public void editerCommentaire(String id, String contenu) {
-		commentaireRepository.updateContenu(Long.parseLong(id), contenu);
-	}
-
-	@Override
-	@Transactional
-	public void supprimerCommentaire(String commentaireId) {
-		commentaireRepository.deleteById(Long.parseLong(commentaireId));
-	}
-
-	@Override
-	@Transactional
-	public void deleteVoie(String voieId) {
-		voieRepository.deleteById(Long.parseLong(voieId));
-	}
-
-	@Override
-	@Transactional
-	public void deleteSecteur(String secteurId) {
-		secteurRepository.deleteById(Long.parseLong(secteurId));
-	}
-
-	@Override
-	@Transactional
-	public void deleteLongueur(String longueurId) {
-		longueurRepository.deleteById(Long.parseLong(longueurId));
-	}
-
-	@Override
-	public void addVoieInSecteur(String valeurCotation, String isEquipe, String secteurId) {
-
-		if (CotationBloc.from(valeurCotation) != null) {
-			Voie voie = new Voie(isEquipe != null, CotationBloc.from(valeurCotation));
-			voie.setSecteur(secteurRepository.findById(Long.parseLong(secteurId)).orElse(null));
-			voieRepository.save(voie);
-		} else {
-			Voie voie = new Voie(isEquipe != null, CotationFalaise.from(valeurCotation));
-			voie.setSecteur(secteurRepository.findById(Long.parseLong(secteurId)).orElse(null));
-			voieRepository.save(voie);
-		}
-	}
-
-	@Override
-	public void addVoieInSite(String valeurCotation, String isEquipe, String siteId) {
-
-		if (CotationBloc.from(valeurCotation) != null) {
-			Voie voie = new Voie(isEquipe != null, CotationBloc.from(valeurCotation));
-			voie.setSite(siteRepository.findById(Long.parseLong(siteId)).orElse(null));
-			voieRepository.save(voie);
-		} else {
-			Voie voie = new Voie(isEquipe != null, CotationFalaise.from(valeurCotation));
-			voie.setSite(siteRepository.findById(Long.parseLong(siteId)).orElse(null));
-			voieRepository.save(voie);
-		}
-	}
-
-	@Override
-	public void addLongueur(String valeurCotation, String voieId) {
-
-		if (CotationBloc.from(valeurCotation) != null) {
-			Longueur longueur = new Longueur(CotationBloc.from(valeurCotation));
-			longueur.setVoie(voieRepository.findById(Long.parseLong(voieId)).orElse(null));
-			longueurRepository.save(longueur);
-		} else {
-			Longueur longueur = new Longueur(CotationFalaise.from(valeurCotation));
-			longueur.setVoie(voieRepository.findById(Long.parseLong(voieId)).orElse(null));
-			longueurRepository.save(longueur);
-		}
-	}
-
-	@Override
-	@Transactional
-	public void editerNomSecteur(String id, String nom) {
-		secteurRepository.updateNom(Long.parseLong(id), nom);
 	}
 }

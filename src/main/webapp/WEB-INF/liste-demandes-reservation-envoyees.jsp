@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <style type="text/css">
 <%@include file="/style/style2.css"%></style>
-<title>Liste des Topos</title>
+<title>Demandes envoyées</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -47,10 +47,11 @@
 									<c:when test="${empty topo.possessor}">
 										<span class="text-success border p-2 mt-2"> Demande de réservation envoyée </span>
 									</c:when>
+									<!-- si l'utilisateur courant est le possesseur d'un topo emprunté, il peut le rendre -->
 									<c:when test="${(topo.possessor != topo.owner) and (not empty topo.possessor)}">
 										<span class="text-success border p-2 mt-2"> Demande de réservation acceptée </span>
 										<p class="card-text">Mail de contact: ${topo.owner.adresseMail}</p>
-										<form action="<c:url value="changementetatemprunt?topoId=${topo.id}
+										<form action="<c:url value="changement-etat-emprunt?topoId=${topo.id}
 											&utilisateurId=${topo.possessor.id}"/>" method="post">
 											<button class="btn btn-danger" type="submit"> Rendre le topo </button>
 										</form>

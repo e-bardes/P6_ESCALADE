@@ -64,6 +64,7 @@
 				<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
 			</form>
 
+			<!-- affichage des sites -->
 			<div class="card-deck">
 				<c:forEach items="${listeDesSites}" var="site" varStatus="status">
 					<div class="col-4 mb-5">

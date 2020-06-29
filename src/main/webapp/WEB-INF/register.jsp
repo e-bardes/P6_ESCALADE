@@ -20,7 +20,6 @@
 </head>
 <body>
 	<div>
-		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 		<%@ include file="/WEB-INF/common/navigation.jspf" %>
 	</div>
 	

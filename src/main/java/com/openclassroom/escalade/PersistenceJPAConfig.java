@@ -65,11 +65,8 @@ public class PersistenceJPAConfig {
 
 	Properties additionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update"); // create-drop
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-//		properties.setProperty("javax.persistence.schema-generation.database.action", "drop-and-create");
-//		properties.setProperty("javax.persistence.schema-generation.create-script-source", "create-db.sql");
-//		properties.setProperty("javax.persistence.schema-generation.drop-script-source", "drop-db.sql");
 		properties.setProperty("javax.persistence.sql-load-script-source", "data.sql");
 
 		return properties;

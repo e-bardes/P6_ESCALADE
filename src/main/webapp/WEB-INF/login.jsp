@@ -20,7 +20,6 @@
 <body>
 	
 	<div>
-		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 		<%@ include file="/WEB-INF/common/navigation.jspf" %>
 	</div>
 
@@ -37,10 +36,6 @@
 					<label for="password">Mot de passe :</label> 
 					<input class="form-control" type="password" name="password" id="password" required>
 					<span class="erreur">${erreurConnexion}</span>
-				</div>
-				<div class="form-group">
-					<label for="memoire">Se souvenir de moi</label>
-					<input type="checkbox" id="memoire" name="memoire">
 				</div>
 				<button class="btn btn-primary" type="submit"> Login </button>
 				<br/>

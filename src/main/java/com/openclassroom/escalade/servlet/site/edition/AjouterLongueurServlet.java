@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.site.edition;
 
 import java.io.IOException;
 
@@ -9,24 +9,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.service.GestionSitesService;
+import com.openclassroom.escalade.service.SiteEditionService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
 @WebServlet(name = "AjouterLongueurServlet", urlPatterns = { "/ajouterlongueur" })
 public class AjouterLongueurServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
-	private GestionSitesService gestionSitesService;
+	private SiteEditionService siteEditionService;
 
 	@Autowired
-	public void setGestionSitesService(GestionSitesService gestionSitesService) {
-		this.gestionSitesService = gestionSitesService;
+	public void setSiteInformationService(SiteEditionService siteEditionService) {
+		this.siteEditionService = siteEditionService;
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		gestionSitesService.addLongueur(request.getParameter("cotation"), request.getParameter("voieId"));
+		// ajouter une longueur à une voie sélectionnée
+		siteEditionService.addLongueur(request.getParameter("cotation"), request.getParameter("voieId"));
 		response.sendRedirect(
 				request.getContextPath() + "/modifierinformations?siteId=" + request.getParameter("siteId"));
 	}

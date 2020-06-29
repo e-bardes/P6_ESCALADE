@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.authentification;
 
 import java.io.IOException;
 

@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <style type="text/css">
 <%@include file="/style/style2.css"%></style>
-<title>Liste des Topos</title>
+<title>Topos disponibles</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -43,6 +43,8 @@
 							<div class="card-body">				
 								<p class="card-text">${topo.description}</p>
 									<c:set var="isAlreadyReserved" value="0" />
+									<!-- parcours de la liste des personnes qui ont réservé le topo pour savoir ce que doit 
+										voir affiché l'utilisateur courant -->
 									<c:forEach items="${topo.applicantList}" var="utilisateur">
 										<c:if test="${utilisateur.id == idSessionUtilisateur }">
 											<c:set var="isAlreadyReserved" value="${countEmpruntNotCurrentUser + 1}" />

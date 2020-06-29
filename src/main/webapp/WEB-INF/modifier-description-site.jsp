@@ -11,7 +11,7 @@
 <style type="text/css">
 <%@include file="/style/style2.css"%>
 </style>
-<title>Commentaire</title>
+<title>Modifier description site</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 

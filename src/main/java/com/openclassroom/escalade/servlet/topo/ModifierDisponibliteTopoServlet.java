@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.topo;
 
 import java.io.IOException;
 
@@ -10,17 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.openclassroom.escalade.domain.Utilisateur;
-import com.openclassroom.escalade.service.TopoService;
+import com.openclassroom.escalade.service.GestionTopoService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
 @WebServlet(name = "ModifierDisponibliteTopoServlet", urlPatterns = { "/modifierdisponibilitetopo" })
 public class ModifierDisponibliteTopoServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
-	private TopoService topoService;
+	private GestionTopoService gestionTopoService;
 
 	@Autowired
-	public void setTopoService(TopoService topoService) {
-		this.topoService = topoService;
+	public void setTopoService(GestionTopoService gestionTopoService) {
+		this.gestionTopoService = gestionTopoService;
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class ModifierDisponibliteTopoServlet extends AbstractServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html");
 
-		topoService.modifierDisponibilite(request.getParameter("topoId"),
+		gestionTopoService.modifierDisponibilite(request.getParameter("topoId"),
 				((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId());
 
 		response.sendRedirect(request.getContextPath() + "/topospersonnel");

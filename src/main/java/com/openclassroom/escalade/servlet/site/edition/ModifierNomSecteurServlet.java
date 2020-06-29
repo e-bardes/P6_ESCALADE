@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.site.edition;
 
 import java.io.IOException;
 
@@ -9,17 +9,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.service.GestionSitesService;
+import com.openclassroom.escalade.service.SiteEditionService;
+import com.openclassroom.escalade.service.SiteInformationService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
 @WebServlet(name = "ModifierNomSecteurServlet", urlPatterns = { "/modifiernomsecteur" })
 public class ModifierNomSecteurServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
-	private GestionSitesService gestionSitesService;
+	private SiteInformationService siteInformationService;
 
 	@Autowired
-	public void setGestionSitesService(GestionSitesService gestionSitesService) {
-		this.gestionSitesService = gestionSitesService;
+	public void setSiteInformationService(SiteInformationService siteInformationService) {
+		this.siteInformationService = siteInformationService;
+	}
+
+	private SiteEditionService siteEditionService;
+
+	@Autowired
+	public void setSiteEditionService(SiteEditionService siteEditionService) {
+		this.siteEditionService = siteEditionService;
 	}
 
 	@Override
@@ -27,7 +36,7 @@ public class ModifierNomSecteurServlet extends AbstractServlet {
 
 		String secteurId = request.getParameter("secteurId");
 
-		request.setAttribute("secteur", gestionSitesService.getSecteurDetails(secteurId));
+		request.setAttribute("secteur", siteInformationService.getSecteurDetails(secteurId));
 		request.getRequestDispatcher(
 				"/modifierinformations?siteId=" + request.getParameter("siteId") + "&nameEditing=" + secteurId)
 				.forward(request, response);
@@ -35,7 +44,7 @@ public class ModifierNomSecteurServlet extends AbstractServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		gestionSitesService.editerNomSecteur(request.getParameter("secteurId"), request.getParameter("nomSecteur"));
+		siteEditionService.editerNomSecteur(request.getParameter("secteurId"), request.getParameter("nomSecteur"));
 		response.sendRedirect(
 				request.getContextPath() + "/modifierinformations?siteId=" + request.getParameter("siteId"));
 	}

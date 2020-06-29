@@ -11,7 +11,7 @@
 <style type="text/css">
 <%@include file="/style/style2.css"%>
 </style>
-<title>Commentaire</title>
+<title>Editer Commentaire</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -22,17 +22,16 @@
 <body class="bg-light">
 
 	<div>
-		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
 		<%@ include file="/WEB-INF/common/navigation.jspf"%>
 	</div>
 
 	<section class="container">
 		<h1 class="text-center jumbotron p-4">Contenu du commentaire</h1>
 		<div class="jumbotron bg-white mt-5 border min-vh-100">
-			<!-- différents affichages pour l'éditer ou la création d'un commentaire -->
+			<!-- différents affichages pour l'édition ou la création d'un commentaire -->
 			<c:choose>
 				<c:when test="${param.isEditing == true}">
-					<form action="<c:url value="postercommentaire?siteId=${param.siteId}
+					<form action="<c:url value="poster-commentaire?siteId=${param.siteId}
 						&commentaireId=${param.commentaireId}&isEditing=true"/>" method="POST">
 						<div class="form-group">
 							<textarea class="form-control" name="contenuDuCommentaire" rows="20"><c:out
@@ -42,7 +41,7 @@
 					</form>
 				</c:when>
 				<c:otherwise>
-					<form action="<c:url value="postercommentaire?siteId=${param.siteId}
+					<form action="<c:url value="poster-commentaire?siteId=${param.siteId}
 						&commentaireId=${param.commentaireId}&isEditing=false"/>" method="POST">
 						<div class="form-group">
 							<textarea class="form-control" name="contenuDuCommentaire" rows="20" ></textarea>

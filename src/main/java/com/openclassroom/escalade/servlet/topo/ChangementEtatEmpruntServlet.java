@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.topo;
 
 import java.io.IOException;
 
@@ -9,46 +9,31 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.service.TopoService;
+import com.openclassroom.escalade.service.GestionTopoService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
-@WebServlet(name = "ChangementEtatEmpruntServlet", urlPatterns = { "/changementetatemprunt" })
+@WebServlet(name = "ChangementEtatEmprunt", urlPatterns = { "/changement-etat-emprunt" })
 public class ChangementEtatEmpruntServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
-	private TopoService topoService;
+	private GestionTopoService gestionTopoService;
 
 	@Autowired
-	public void setTopoService(TopoService topoService) {
-		this.topoService = topoService;
+	public void setTopoService(GestionTopoService gestionTopoService) {
+		this.gestionTopoService = gestionTopoService;
 	}
 
-//	@Override
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		response.setContentType("text/html");
-//
-//		topoService.modifierDisponibilite(request.getParameter("topoId"),
-//				((Utilisateur) request.getSession().getAttribute("sessionUtilisateur")).getId());
-//
-//		response.sendRedirect(request.getContextPath() + "/topospersonnel");
-//	}
-
+	// servlet utilisé quand un utilisateur décide de rendre de lui même le topo à
+	// son propriétaire
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-//		if (Boolean.parseBoolean(request.getParameter("acceptation")) == true) {
-//			topoService.modifierDisponibilite(request.getParameter("topoId"),
-//					Long.parseLong(request.getParameter("utilisateurId")));
-//		} else if (Boolean.parseBoolean(request.getParameter("acceptation")) == false) {
-//			topoService.deleteAReservationDemand(request.getParameter("topoId"), request.getParameter("utilisateurId"));
-//		} else {
-		topoService.modifierDisponibilite(request.getParameter("topoId"),
+		gestionTopoService.modifierDisponibilite(request.getParameter("topoId"),
 				Long.parseLong(request.getParameter("utilisateurId")));
-		topoService.deleteAReservationDemand(request.getParameter("topoId"), request.getParameter("utilisateurId"));
-//		}
+		gestionTopoService.deleteAReservationDemand(request.getParameter("topoId"),
+				request.getParameter("utilisateurId"));
 
-		// redirection vers demandes reservation envoyées aussi
 		response.sendRedirect(request.getContextPath() + "/topospersonnel");
 	}
 

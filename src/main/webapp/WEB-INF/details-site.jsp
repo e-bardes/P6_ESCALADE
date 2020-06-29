@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Liste des topos</title>
+<title>Description site</title>
 <style type="text/css"><%@include file="/style/style2.css"%></style>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,20 +20,14 @@
 </head>
 <body class="bg-light">
 	<div>
-		<!--  %@ include file="/WEB-INF/common/header.jspf" %-->
-	</div>
-
-	<div>
 		<%@ include file="/WEB-INF/common/navigation.jspf"%>
 	</div>
-
 	<section class="container ">
 		<h1 class="text-center jumbotron p-4">Détails du site</h1>
 		<div class="jumbotron bg-white mt-5 mb-5 border min-vh-100">
 			
-			<!-- description du site -->
+			<!-- Description du site -->
 			<h3 class="mb-4">Description du site:</h3>
-			
 			<div class="row">
 				<div class="col-8">
 					<ul class="list-group col-6">
@@ -64,7 +58,7 @@
 		     	<p> ${site.description} </p>
 	     	</div>
 	     	
-	     	
+	     	<!-- liste des cotations (voies et longueurs) du site si il n'a pas de secteur -->
 	     	<c:if test="${empty site.listeSecteurs}">
 	     		<div class="table-responsive col-4">
 						<table class="table table-bordered">
@@ -130,10 +124,10 @@
 				</c:if>
 			</div>
 			
+			<!-- Présentation des secteurs -->
 			<c:if test="${not empty site.listeSecteurs}">
-				
+				<!-- Description -->
 				<h3 class="my-4">Description des secteurs:</h3>
-				
 				<div class="row">
 				  <div class="col-4">
 				    <div class="list-group" id="list-tab" role="tablist">
@@ -161,6 +155,7 @@
 							      	
 												<p>${secteur.description}</p>
 							      	
+							      	<!-- liste des cotations (voies et longueurs) des différents secteurs -->
 								     		<div class="table-responsive">
 													<table class="table table-bordered">
 													<thead>
@@ -299,17 +294,15 @@
 				</div>
 			</c:if>
 			
-			
 			<!-- pour ajouter un nouveau commentaire -->
 			<div class="mt-5">
-				<a href="<c:url value="postercommentaire?siteId=${site.id}&commentaireId=null&isEditing=false"/>">
+				<a href="<c:url value="poster-commentaire?siteId=${site.id}&commentaireId=null&isEditing=false"/>">
 					<button class="btn btn-dark btn-lg"><i class="fa fa-comment"></i><br>Commenter</button>
 				</a>	
 				<a class="ml-3" href="<c:url value="modifierinformations?siteId=${site.id}"/>">
 					<button class="btn btn-primary btn-lg"><i class="fa fa-pencil"></i><br>Modifier informations</button>
 				</a>
 			</div>
-			
 			
 			<div class="jumbotron mt-5">
 				<h3>Commentaires:</h3>
@@ -327,19 +320,19 @@
 									<div class="col-4">
 										<!-- pour répondre après un commentaire et ses potentielles réponses -->
 										<p>
-											<a href="<c:url value="postercommentaire?siteId=${site.id}&commentaireId=${commentaire.id}&isEditing=false"/>">
+											<a href="<c:url value="poster-commentaire?siteId=${site.id}&commentaireId=${commentaire.id}&isEditing=false"/>">
 												Répondre à ce commentaire </a>
 										</p>
 										<!-- suppression ou édition d'un commentaire par un admin -->
 										<c:if test="${sessionScope.sessionUtilisateur.isMembreAssociation == true}">
 											<p>
 												<a class="text-danger"
-													href="<c:url value="supprimercommentaire?siteId=${site.id}&commentaireId=${commentaire.id}"/>">
+													href="<c:url value="supprimer-commentaire?siteId=${site.id}&commentaireId=${commentaire.id}"/>">
 													Supprimer ce commentaire</a>
 											</p>
 											<p>
 												<a class="text-danger"
-													href="<c:url value="postercommentaire?siteId=${site.id}&commentaireId=${commentaire.id}&isEditing=true"/>">
+													href="<c:url value="poster-commentaire?siteId=${site.id}&commentaireId=${commentaire.id}&isEditing=true"/>">
 													Editer ce commentaire</a>
 											</p>
 										</c:if>
@@ -359,12 +352,12 @@
 												<c:if test="${sessionScope.sessionUtilisateur.isMembreAssociation == true}">
 													<p>
 														<a class="text-danger"
-															href="<c:url value="supprimercommentaire?siteId=${site.id}&commentaireId=${repcommentaire.id}"/>">
+															href="<c:url value="supprimer-commentaire?siteId=${site.id}&commentaireId=${repcommentaire.id}"/>">
 															Supprimer ce commentaire</a>
 													</p>
 													<p>
 														<a class="text-danger"
-															href="<c:url value="postercommentaire?siteId=${site.id}&commentaireId=${repcommentaire.id}&isEditing=true"/>">
+															href="<c:url value="poster-commentaire?siteId=${site.id}&commentaireId=${repcommentaire.id}&isEditing=true"/>">
 															Editer ce commentaire</a>
 													</p>
 												</c:if>

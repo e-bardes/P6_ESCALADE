@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.site;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,40 +15,43 @@ import com.openclassroom.escalade.domain.CotationBloc;
 import com.openclassroom.escalade.domain.CotationFalaise;
 import com.openclassroom.escalade.domain.Departement;
 import com.openclassroom.escalade.domain.Site;
-import com.openclassroom.escalade.service.GestionSitesService;
+import com.openclassroom.escalade.service.SiteInformationService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
-// accessible à partir de n'importe quelle page
 @WebServlet(name = "ListeSitesServlet", urlPatterns = { "/site" })
 public class ListeSitesServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
-	private GestionSitesService gestionSitesService;
+	private SiteInformationService siteInformationService;
 
 	@Autowired
-	public void setGestionSitesService(GestionSitesService gestionSitesService) {
-		this.gestionSitesService = gestionSitesService;
+	public void setSiteInformationService(SiteInformationService siteInformationService) {
+		this.siteInformationService = siteInformationService;
 	}
 
-	// on récupère la liste de tous les sites
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// ces trois lignes permettent de remplir les choix des critères de recherche
 		request.setAttribute("listeCotationBloc", Arrays.asList(CotationBloc.values()));
 		request.setAttribute("listeCotationFalaise", Arrays.asList(CotationFalaise.values()));
 		request.setAttribute("listeDepartements", Arrays.asList(Departement.values()));
 
+		// si on fait un filtrage en fonction d'un ou plusieurs critères
 		if (request.getParameter("filtrage").contentEquals("true")) {
 			request.setAttribute("listeDesSites", request.getAttribute("listeDesSites"));
+			// sinon on récupère tous les sites existants
 		} else {
-			request.setAttribute("listeDesSites", gestionSitesService.getAllSites());
+			request.setAttribute("listeDesSites", siteInformationService.getAllSites());
 		}
 
+		// pour un affichage de quelques informations pour chacun des sites
 		@SuppressWarnings("unchecked")
 		List<Site> listeSites = (List<Site>) request.getAttribute("listeDesSites");
-		request.setAttribute("listeNbSecteurs", gestionSitesService.getNbSecteursOfSelectedSites(listeSites));
-		request.setAttribute("listeNbVoies", gestionSitesService.getNbVoiesOfSelectedSites(listeSites));
-		request.setAttribute("cotationList", gestionSitesService.getMinAndMaxCotationOfSelectedSites(listeSites));
+		request.setAttribute("listeNbSecteurs", siteInformationService.getNbSecteursOfSelectedSites(listeSites));
+		request.setAttribute("listeNbVoies", siteInformationService.getNbVoiesOfSelectedSites(listeSites));
+		request.setAttribute("cotationList", siteInformationService.getMinAndMaxCotationOfSelectedSites(listeSites));
 
 		request.getRequestDispatcher("/WEB-INF/liste-sites.jsp").forward(request, response);
 

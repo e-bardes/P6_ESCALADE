@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.authentification;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.openclassroom.escalade.service.UtilisateurService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = { "/register" })
 public class RegisterServlet extends AbstractServlet {

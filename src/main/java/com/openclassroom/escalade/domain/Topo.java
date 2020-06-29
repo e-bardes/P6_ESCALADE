@@ -1,5 +1,3 @@
-// pas encore utilisé
-
 package com.openclassroom.escalade.domain;
 
 import java.time.LocalDate;
@@ -34,14 +32,6 @@ public class Topo {
 	private Departement lieu;
 	@Column(name = "date_de_parution")
 	private LocalDate dateDeParution;
-
-//	@Column(name = "is_disponible") // pas utile ça faudra juste vérifier que le topo n'est lié à aucun utilisateur
-//									// je pense
-//									// même si l'état est indiqué dans l'énoncé
-//	private boolean isDisponible;
-
-//	@OneToMany(mappedBy = "topo", fetch = FetchType.EAGER)
-//	private List<EmpruntTopo> listeEmpruntsTopo = new ArrayList<EmpruntTopo>();
 
 	@ManyToOne
 	@JoinColumn(name = "owner_id")

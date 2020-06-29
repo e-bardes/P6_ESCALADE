@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.site.edition;
 
 import java.io.IOException;
 
@@ -9,19 +9,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.service.GestionSitesService;
+import com.openclassroom.escalade.service.SiteEditionService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
 @WebServlet(name = "AjouterVoieServlet", urlPatterns = { "/ajoutervoie" })
 public class AjouterVoieServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
-	private GestionSitesService gestionSitesService;
+	private SiteEditionService siteEditionService;
 
 	@Autowired
-	public void setGestionSitesService(GestionSitesService gestionSitesService) {
-		this.gestionSitesService = gestionSitesService;
+	public void setSiteInformationService(SiteEditionService siteEditionService) {
+		this.siteEditionService = siteEditionService;
 	}
 
+	// ajout d'une voie que ce soit pour un site ou un secteur
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -30,10 +32,10 @@ public class AjouterVoieServlet extends AbstractServlet {
 		String secteurId = request.getParameter("secteurId");
 
 		if (secteurId != null) {
-			gestionSitesService.addVoieInSecteur(request.getParameter("cotation"), request.getParameter("isEquipe"),
+			siteEditionService.addVoieInSecteur(request.getParameter("cotation"), request.getParameter("isEquipe"),
 					secteurId);
 		} else {
-			gestionSitesService.addVoieInSite(request.getParameter("cotation"), request.getParameter("isEquipe"),
+			siteEditionService.addVoieInSite(request.getParameter("cotation"), request.getParameter("isEquipe"),
 					siteId);
 		}
 

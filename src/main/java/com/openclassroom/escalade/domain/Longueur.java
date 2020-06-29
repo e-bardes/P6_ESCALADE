@@ -18,7 +18,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "testdb.longueur")
-// @Inheritance(strategy = InheritanceType.JOINED)
 public class Longueur {
 
 	@Id

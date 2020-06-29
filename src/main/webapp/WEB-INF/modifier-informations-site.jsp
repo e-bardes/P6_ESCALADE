@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Liste des topos</title>
+	<title>Modifier informations site</title>
 	
 	<style type="text/css">
 	<%@ include file="/style/style2.css" %>

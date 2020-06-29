@@ -9,7 +9,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Succès de l'inscription</title>
 	
 	<style type="text/css"><%@ include file="/style/style2.css" %></style>
 
@@ -25,8 +25,8 @@
 	</div>
 	
 	<!-- après s'être inscrit avec succès -->
-	<section>
-		<div class="container jumbotron bg-white mt-5 border">
+	<section class="container">
+		<div class="jumbotron bg-white mt-5 border min-vh-100">
             <p>Nom : <c:out value="${ requestScope.nom }"/></p>
             <p>Prénom : <c:out value="${ requestScope.prenom }"/></p>
             <c:if test="${ requestScope.adressePostal != '' }">

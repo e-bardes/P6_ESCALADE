@@ -1,4 +1,4 @@
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.site.commentary;
 
 import java.io.IOException;
 
@@ -9,29 +9,29 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.service.GestionSitesService;
+import com.openclassroom.escalade.service.SiteCommentaryService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
-@WebServlet(name = "SupprimerCommentaireServlet", urlPatterns = { "/supprimercommentaire" })
+@WebServlet(name = "SupprimerCommentaireServlet", urlPatterns = { "/supprimer-commentaire" })
 public class SupprimerCommentaireServlet extends AbstractServlet {
 
 	private static final long serialVersionUID = 1L;
-	
-	private GestionSitesService gestionSitesService;
-	
+
+	private SiteCommentaryService siteCommentaryService;
+
 	@Autowired
-	public void setGestionSitesService(GestionSitesService gestionSitesService) {
-		this.gestionSitesService = gestionSitesService;
+	public void setSiteCommentaryService(SiteCommentaryService siteCommentaryService) {
+		this.siteCommentaryService = siteCommentaryService;
 	}
-	
-	// à partir de détails-site.jsp
+
 	// suppression d'un commentaire par un admin
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		gestionSitesService.supprimerCommentaire(request.getParameter("commentaireId"));
-		
-		request.getRequestDispatcher("/details-site?id=" + request.getParameter("siteId")).forward(request, response);;
-//		response.sendRedirect(request.getContextPath() + "/details-site?id=" + 
-//				request.getParameter("siteId"));
+
+		siteCommentaryService.deleteCommentary(request.getParameter("commentaireId"));
+
+		request.getRequestDispatcher("/details-site?id=" + request.getParameter("siteId")).forward(request, response);
+
 	}
 }

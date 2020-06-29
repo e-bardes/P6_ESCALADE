@@ -1,5 +1,5 @@
 
-package com.openclassroom.escalade.servlet;
+package com.openclassroom.escalade.servlet.site.edition;
 
 import java.io.IOException;
 
@@ -10,26 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.openclassroom.escalade.service.GestionSitesService;
+import com.openclassroom.escalade.service.SiteEditionService;
+import com.openclassroom.escalade.servlet.AbstractServlet;
 
 @WebServlet(name = "CreateSecteurServlet", urlPatterns = { "/createsecteur" })
 public class CreateSecteurServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 
-	private GestionSitesService gestionSitesService;
+	private SiteEditionService siteEditionService;
 
 	@Autowired
-	public void setGestionSitesService(GestionSitesService gestionSitesService) {
-		this.gestionSitesService = gestionSitesService;
+	public void setSiteInformationService(SiteEditionService siteEditionService) {
+		this.siteEditionService = siteEditionService;
 	}
 
+	// création d'un secteur en lui donnant un nom
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String siteId = request.getParameter("siteId");
 
-		gestionSitesService.createSecteur(siteId, request.getParameter("nomSecteur"));
+		siteEditionService.createSecteur(siteId, request.getParameter("nomSecteur"));
 
 		response.sendRedirect(request.getContextPath() + "/modifierinformations?siteId=" + siteId);
 	}

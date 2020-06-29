@@ -1,5 +1,3 @@
-// pas encore utilisé
-
 package com.openclassroom.escalade.service;
 
 import java.time.LocalDate;
@@ -15,8 +13,8 @@ import com.openclassroom.escalade.domain.Utilisateur;
 import com.openclassroom.escalade.repository.TopoRepository;
 import com.openclassroom.escalade.repository.UtilisateurRepository;
 
-@Service("topoService")
-public class TopoServiceImpl implements TopoService {
+@Service("gestionTopoService")
+public class GestionTopoServiceImpl implements GestionTopoService {
 
 	private TopoRepository repository;
 
@@ -32,18 +30,13 @@ public class TopoServiceImpl implements TopoService {
 		this.utilisateurRepository = utilisateurRepository;
 	}
 
-	public TopoServiceImpl() {
+	public GestionTopoServiceImpl() {
 	}
 
 	@Override
 	public List<Topo> getAllToposOfAUser(Long utilisateurId) {
 		return repository.findAllToposOwnedOrPossessed(utilisateurId);
 	}
-
-//	@Override
-//	public List<Topo> getAllToposDisponiblesWhichDontBelongToTheCurrentUser(Long utilisateurId) {
-//		return repository.findByIsDisponibleAndNotBelongToTheCurrentUser(utilisateurId);
-//	}
 
 	@Override
 	public List<Topo> getAllToposDisponiblesWhichDontBelongToTheCurrentUser(Long utilisateurId) {
@@ -54,19 +47,6 @@ public class TopoServiceImpl implements TopoService {
 	@Transactional
 	public void addTopo(String nom, String valeurDepartement, String date, String description, String isDisponible,
 			Long utilisateurId) {
-//		Topo topo = new Topo(nom, departement, LocalDate.parse(date), Boolean.parseBoolean(isDisponible), description);
-//		EmpruntTopo empruntTopo = new EmpruntTopo(topo, utilisateur);
-//		repository.save(topo);
-//		EmpruntTopoKey id = new EmpruntTopoKey(true, true, topo.getId(), utilisateur.getId());
-//		empruntTopo.setId(id);
-//		empruntTopoRepository.save(empruntTopo);
-
-//		Topo topo = new Topo(nom, departement, LocalDate.parse(date), description);
-//		repository.save(topo);
-//		Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElse(null);
-//		utilisateur.getOwnedTopoList().add(topo);
-//		utilisateur.getPossessedTopoList().add(topo);
-//		utilisateurRepository.save(utilisateur);
 
 		Topo topo = new Topo(nom, Departement.from(valeurDepartement), LocalDate.parse(date), description);
 		Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElse(null);
@@ -89,6 +69,8 @@ public class TopoServiceImpl implements TopoService {
 		if (topo.getPossessor() == null) {
 			repository.updateDisponibilite(id, utilisateurId);
 			Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElse(null);
+			// quand un demande est acceptée alors toutes les autres sont rejetés
+			// automatiquement
 			topo.getApplicantList().clear();
 			topo.getApplicantList().add(utilisateur);
 			repository.save(topo);
@@ -100,12 +82,6 @@ public class TopoServiceImpl implements TopoService {
 	@Override
 	@Transactional
 	public void demandeDeReservation(String topoId, Long utilisateurId) {
-//		Topo topo = repository.findById(Long.parseLong(topoId)).orElse(null);
-//		EmpruntTopo empruntTopo = new EmpruntTopo(topo, utilisateur);
-//		EmpruntTopoKey id = new EmpruntTopoKey(false, false, topo.getId(), utilisateur.getId());
-//		empruntTopo.setId(id);
-//		empruntTopoRepository.save(empruntTopo);
-
 		Topo topo = repository.findById(Long.parseLong(topoId)).orElse(null);
 		Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElse(null);
 		topo.getApplicantList().add(utilisateur);
@@ -122,12 +98,6 @@ public class TopoServiceImpl implements TopoService {
 	public List<Topo> getAllReservationDemandsSendOfAUser(Utilisateur utilisateur) {
 		return repository.findAllToposDemandsOfAUser(utilisateur);
 	}
-
-//	@Override
-//	@Transactional
-//	public void attribuerTopo(Long utilisateurId, String topoId) {
-//		empruntTopoRepository.updateIsPossede(utilisateurId, Long.parseLong(topoId));
-//	}
 
 	@Override
 	@Transactional
