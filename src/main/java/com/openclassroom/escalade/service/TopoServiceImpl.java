@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.openclassroom.escalade.domain.Departement;
 import com.openclassroom.escalade.domain.Topo;
 import com.openclassroom.escalade.domain.Utilisateur;
 import com.openclassroom.escalade.repository.TopoRepository;
@@ -51,7 +52,7 @@ public class TopoServiceImpl implements TopoService {
 
 	@Override
 	@Transactional
-	public void addTopo(String nom, String departement, String date, String description, String isDisponible,
+	public void addTopo(String nom, String valeurDepartement, String date, String description, String isDisponible,
 			Long utilisateurId) {
 //		Topo topo = new Topo(nom, departement, LocalDate.parse(date), Boolean.parseBoolean(isDisponible), description);
 //		EmpruntTopo empruntTopo = new EmpruntTopo(topo, utilisateur);
@@ -67,7 +68,7 @@ public class TopoServiceImpl implements TopoService {
 //		utilisateur.getPossessedTopoList().add(topo);
 //		utilisateurRepository.save(utilisateur);
 
-		Topo topo = new Topo(nom, departement, LocalDate.parse(date), description);
+		Topo topo = new Topo(nom, Departement.from(valeurDepartement), LocalDate.parse(date), description);
 		Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElse(null);
 
 		topo.setOwner(utilisateur);

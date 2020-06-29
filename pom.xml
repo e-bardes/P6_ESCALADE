@@ -16,7 +16,11 @@
   	<spring.version>5.2.5.RELEASE</spring.version>
   </properties>
   
+  
+  
   <dependencies>
+  
+  
   
 	  	<!-- spring gère l'injection de dépendances qui va permettre d'utiliser des objets sans les créer manuellement  -->
 	    <dependency>
@@ -115,6 +119,11 @@
 		</dependency>
 		
   </dependencies>
+  
+  
+  
+  
+  
   <build>
     <finalName>escalade</finalName>
   </build>

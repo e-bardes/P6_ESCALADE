@@ -17,7 +17,7 @@ public interface TopoService {
 
 	void demandeDeReservation(String topoId, Long utilisateurId);
 
-	void addTopo(String nom, String departement, String date, String description, String isDisponible,
+	void addTopo(String nom, String valeurDepartement, String date, String description, String isDisponible,
 			Long utilisateurId);
 
 	void modifierDisponibilite(String topoId, Long utilisateurId);

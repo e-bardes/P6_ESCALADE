@@ -52,6 +52,13 @@ public class Commentaire {
 		this.contenu = contenu;
 	}
 
+	public Commentaire(Utilisateur utilisateur, Site site, String contenu, Commentaire commentaireParent) {
+		this.utilisateur = utilisateur;
+		this.site = site;
+		this.contenu = contenu;
+		this.commentaireParent = commentaireParent;
+	}
+
 	public Long getId() {
 		return id;
 	}

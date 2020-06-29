@@ -388,9 +388,10 @@ public class GestionSitesServiceImpl implements GestionSitesService {
 		Commentaire commentaire = new Commentaire(utilisateur,
 				siteRepository.findById(Long.parseLong(siteId)).orElse(null), contenu);
 
-		if (!(commentaireId.contentEquals("null")))
+		if (!(commentaireId.contentEquals("null"))) {
 			commentaire
 					.setCommentaireParent(commentaireRepository.findById(Long.parseLong(commentaireId)).orElse(null));
+		}
 
 		commentaireRepository.save(commentaire);
 	}

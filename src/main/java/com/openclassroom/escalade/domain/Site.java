@@ -33,10 +33,10 @@ public class Site {
 	private String description;
 	@Column(name = "is_officiel_les_amis_de_lescalade")
 	private boolean isOfficielLesAmisDeLescalade;
-	@Column(name = "image_data")
-	private byte[] imageData;
-	@Column(name = "image_file_name")
-	String imageFileName;
+//	@Column(name = "image_data")
+//	private byte[] imageData;
+//	@Column(name = "image_file_name")
+//	String imageFileName;
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(targetEntity = Secteur.class, mappedBy = "site")
@@ -128,20 +128,20 @@ public class Site {
 		this.nom = nom;
 	}
 
-	public byte[] getImageData() {
-		return imageData;
-	}
-
-	public void setImageData(byte[] imageData) {
-		this.imageData = imageData;
-	}
-
-	public String getImageFileName() {
-		return imageFileName;
-	}
-
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
+//	public byte[] getImageData() {
+//		return imageData;
+//	}
+//
+//	public void setImageData(byte[] imageData) {
+//		this.imageData = imageData;
+//	}
+//
+//	public String getImageFileName() {
+//		return imageFileName;
+//	}
+//
+//	public void setImageFileName(String imageFileName) {
+//		this.imageFileName = imageFileName;
+//	}
 
 }

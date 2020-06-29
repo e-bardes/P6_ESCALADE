@@ -32,8 +32,8 @@ public class Utilisateur {
 	@OneToMany(targetEntity = Commentaire.class, mappedBy = "utilisateur")
 	public List<Commentaire> listeCommentaires = new ArrayList<Commentaire>();
 
-	@OneToMany(mappedBy = "utilisateur")
-	private List<EmpruntTopo> listeEmpruntsTopo = new ArrayList<EmpruntTopo>();
+//	@OneToMany(mappedBy = "utilisateur")
+//	private List<EmpruntTopo> listeEmpruntsTopo = new ArrayList<EmpruntTopo>();
 
 //	@ManyToMany
 //	@JoinTable(name = "testdb.topo_booking", joinColumns = @JoinColumn(name = "utilisateur_id"), inverseJoinColumns = @JoinColumn(name = "topo_id"))
@@ -99,13 +99,13 @@ public class Utilisateur {
 		this.isMembreAssociation = isMembreAssociation;
 	}
 
-	public List<EmpruntTopo> getListeEmpruntsTopo() {
-		return listeEmpruntsTopo;
-	}
-
-	public void setListeEmpruntsTopo(List<EmpruntTopo> listeEmpruntsTopo) {
-		this.listeEmpruntsTopo = listeEmpruntsTopo;
-	}
+//	public List<EmpruntTopo> getListeEmpruntsTopo() {
+//		return listeEmpruntsTopo;
+//	}
+//
+//	public void setListeEmpruntsTopo(List<EmpruntTopo> listeEmpruntsTopo) {
+//		this.listeEmpruntsTopo = listeEmpruntsTopo;
+//	}
 
 	public Long getId() {
 		return id;

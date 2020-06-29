@@ -4,6 +4,7 @@
 
 package com.openclassroom.escalade.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,36 +17,46 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="testdb.longueur")
+@Table(name = "testdb.longueur")
 // @Inheritance(strategy = InheritanceType.JOINED)
 public class Longueur {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Enumerated(value = EnumType.STRING)
-	@Column(name="cotation_bloc")
+	@Column(name = "cotation_bloc")
 	private CotationBloc cotationBloc;
-	
+
 	@Enumerated(value = EnumType.STRING)
-	@Column(name="cotation_falaise")
+	@Column(name = "cotation_falaise")
 	private CotationFalaise cotationFalaise;
 
-	@ManyToOne
-	@JoinColumn(name="voie_id", nullable = false)
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "voie_id")
 	private Voie voie;
-	
+
 	public Longueur() {
-		
+
 	}
-	
+
 	public Longueur(CotationBloc cotationBloc) {
 		this.cotationBloc = cotationBloc;
 	}
-	
+
+	public Longueur(CotationBloc cotationBloc, Voie voie) {
+		this.cotationBloc = cotationBloc;
+		this.voie = voie;
+	}
+
 	public Longueur(CotationFalaise cotationFalaise) {
 		this.cotationFalaise = cotationFalaise;
+	}
+
+	public Longueur(CotationFalaise cotationFalaise, Voie voie) {
+		this.cotationFalaise = cotationFalaise;
+		this.voie = voie;
 	}
 
 	public Long getId() {
@@ -63,7 +74,7 @@ public class Longueur {
 	public void setVoie(Voie voie) {
 		this.voie = voie;
 	}
-	
+
 	public CotationBloc getCotationBloc() {
 		return cotationBloc;
 	}
@@ -71,7 +82,7 @@ public class Longueur {
 	public void setCotationBloc(CotationBloc cotationbloc) {
 		this.cotationBloc = cotationbloc;
 	}
-	
+
 	public CotationFalaise getCotationFalaise() {
 		return cotationFalaise;
 	}

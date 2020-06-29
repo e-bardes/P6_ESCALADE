@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 // en étant déconnecté.
 // à terme, il sera utilisé pour d'autres fonctionnalités qui demandent d'être authentifié
 @WebFilter(urlPatterns = { "/postercommentaire", "/modifierinformations", "/topospersonnel", "/toposdisponibles",
-		"/listedemandesreservation", "/toposdemandes" })
+		"/listedemandesreservationenvoyees", "/toposdemandes", "/listedemandesreservationrecues" })
 public class RestrictionFilter implements Filter {
 
 	public RestrictionFilter() {

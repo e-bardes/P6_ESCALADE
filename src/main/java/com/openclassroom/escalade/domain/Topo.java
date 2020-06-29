@@ -3,14 +3,11 @@
 package com.openclassroom.escalade.domain;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -35,7 +31,7 @@ public class Topo {
 	private String nom;
 	@Column(length = 1000)
 	private String description;
-	private String lieu;
+	private Departement lieu;
 	@Column(name = "date_de_parution")
 	private LocalDate dateDeParution;
 
@@ -44,8 +40,8 @@ public class Topo {
 //									// même si l'état est indiqué dans l'énoncé
 //	private boolean isDisponible;
 
-	@OneToMany(mappedBy = "topo", fetch = FetchType.EAGER)
-	private List<EmpruntTopo> listeEmpruntsTopo = new ArrayList<EmpruntTopo>();
+//	@OneToMany(mappedBy = "topo", fetch = FetchType.EAGER)
+//	private List<EmpruntTopo> listeEmpruntsTopo = new ArrayList<EmpruntTopo>();
 
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
@@ -63,7 +59,7 @@ public class Topo {
 	public Topo() {
 	}
 
-	public Topo(String nom, String lieu, LocalDate dateDeParution, String description) {
+	public Topo(String nom, Departement lieu, LocalDate dateDeParution, String description) {
 		this.nom = nom;
 		this.lieu = lieu;
 		this.dateDeParution = dateDeParution;
@@ -94,21 +90,21 @@ public class Topo {
 		this.description = description;
 	}
 
-	public String getLieu() {
+	public Departement getLieu() {
 		return lieu;
 	}
 
-	public void setLieu(String lieu) {
+	public void setLieu(Departement lieu) {
 		this.lieu = lieu;
 	}
 
-	public List<EmpruntTopo> getListeEmpruntsTopo() {
-		return listeEmpruntsTopo;
-	}
-
-	public void setListeEmpruntsTopo(List<EmpruntTopo> listeEmpruntsTopo) {
-		this.listeEmpruntsTopo = listeEmpruntsTopo;
-	}
+//	public List<EmpruntTopo> getListeEmpruntsTopo() {
+//		return listeEmpruntsTopo;
+//	}
+//
+//	public void setListeEmpruntsTopo(List<EmpruntTopo> listeEmpruntsTopo) {
+//		this.listeEmpruntsTopo = listeEmpruntsTopo;
+//	}
 
 	public LocalDate getDateDeParution() {
 		return dateDeParution;
